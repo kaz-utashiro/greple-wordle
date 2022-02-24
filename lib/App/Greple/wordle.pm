@@ -1,11 +1,8 @@
 package App::Greple::wordle;
-use 5.008001;
-use strict;
+use v5.14;
 use warnings;
 
 our $VERSION = "0.01";
-
-
 
 1;
 __END__
@@ -14,26 +11,26 @@ __END__
 
 =head1 NAME
 
-App::Greple::wordle - It's new $module
+App::Greple::wordle - world module for greple
 
 =head1 SYNOPSIS
 
-    use App::Greple::wordle;
+greple -Mwordle answer
 
 =head1 DESCRIPTION
 
 App::Greple::wordle is ...
 
+=head1 AUTHOR
+
+Kazumasa Utashiro
+
 =head1 LICENSE
 
-Copyright (C) Kazumasa Utashiro.
+Copyright 2022 Kazumasa Utashiro.
 
 This library is free software; you can redistribute it and/or modify
 it under the same terms as Perl itself.
-
-=head1 AUTHOR
-
-Kazumasa Utashiro E<lt>kaz@utashiro.comE<gt>
 
 =cut
 
