@@ -124,9 +124,13 @@ Generate random answer every time.
 
 =item WORDLE_COMPAT
 
-Generate compatible answer with original game.
+Generate compatible answer with the original game.
 
 =back
+
+=head1 SEE ALSO
+
+L<App::Greple>, L<https://github.com/kaz-utashiro/greple>
 
 =head1 AUTHOR
 
@@ -146,6 +150,8 @@ __DATA__
 # --wordle option is defined in initialize()
 
 option default --need 1 --no-filename --wordle
+
+# --interactive is set in initialize() when stdin is a tty
 
 option --interactive \
        --if 'head -1' \

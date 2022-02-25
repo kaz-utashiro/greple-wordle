@@ -36,7 +36,11 @@ colored green in other position.
 
 - WORDLE\_COMPAT
 
-    Generate compatible answer with original game.
+    Generate compatible answer with the original game.
+
+# SEE ALSO
+
+[App::Greple](https://metacpan.org/pod/App%3A%3AGreple), [https://github.com/kaz-utashiro/greple](https://github.com/kaz-utashiro/greple)
 
 # AUTHOR
 
