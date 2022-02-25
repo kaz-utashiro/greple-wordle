@@ -6,6 +6,7 @@ use utf8;
 our $VERSION = "0.01";
 
 use Data::Dumper;
+use charnames ':full';
 use Getopt::EX::Colormap 'colorize';
 use App::Greple::wordle::word_all    qw(%word_all);
 use App::Greple::wordle::word_hidden qw(@word_hidden);
