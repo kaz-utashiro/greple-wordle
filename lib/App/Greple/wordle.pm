@@ -3,7 +3,7 @@ use v5.14;
 use warnings;
 use utf8;
 
-our $VERSION = "0.01";
+our $VERSION = "0.02";
 
 use Data::Dumper;
 use Date::Calc qw(Delta_Days);

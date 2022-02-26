@@ -12,8 +12,8 @@ greple -Mwordle
 App::Greple::wordle is a greple module which implements wordle game.
 Correctness is checked by regular expression.
 
-Rule is almost same as original wordle but answer is different.  Daily
-answer is updated 0AM localtime.
+Rule is almost same as original wordle but answer is different.  Set
+environment `WORDLE_COMPAT=1` to get compatible answer.
 
 <div>
     <p><img width="50%" src="https://raw.githubusercontent.com/kaz-utashiro/greple-wordle/main/images/screen.png">
