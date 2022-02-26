@@ -47,9 +47,9 @@ sub initialize {
     my $black  = qr/(?=[a-z])[^$answer]/i;
 
     $mod->setopt('--wordle',
-		 qw( --cm 555/G --re ), "$green",
-		 qw( --cm 555/Y --re ), "$yellow",
-		 qw( --cm 555/k --re ), "$black",
+		 qw( --cm 555/6aaa64 --re ), "$green",
+		 qw( --cm 555/c9b458 --re ), "$yellow",
+		 qw( --cm 555/787c7e --re ), "$black",
 	);
 }
 
