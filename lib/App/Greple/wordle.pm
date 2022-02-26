@@ -33,7 +33,7 @@ sub initialize {
 	$index = int rand(@word_hidden);
     }
     $answer ||= $word_hidden[ $index ];
-    length($answer) == 5 or die "$answer: wrong word\n";
+    $answer =~ /^[a-z]{5}$/i or die "$answer: wrong word\n";
 
     my $green = do {
 	my @green;
@@ -46,11 +46,12 @@ sub initialize {
     my $yellow = qr/[$answer]/i;
     my $black  = qr/(?=[a-z])[^$answer]/i;
 
-    $mod->setopt('--wordle',
-		 qw( --cm 555/6aaa64 --re ), "$green",
-		 qw( --cm 555/c9b458 --re ), "$yellow",
-		 qw( --cm 555/787c7e --re ), "$black",
-	);
+    $mod->setopt(split ' ', qq(
+		 --wordle
+		 --cm 555/#6aaa64 --re $green
+		 --cm 555/#c9b458 --re $yellow
+		 --cm 555/#787c7e --re $black
+		));
 }
 
 sub check {
