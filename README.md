@@ -42,6 +42,8 @@ colored green in other position.
 
 [App::Greple](https://metacpan.org/pod/App%3A%3AGreple), [https://github.com/kaz-utashiro/greple](https://github.com/kaz-utashiro/greple)
 
+[https://github.com/alex1770/wordle](https://github.com/alex1770/wordle)
+
 # AUTHOR
 
 Kazumasa Utashiro

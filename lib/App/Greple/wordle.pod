@@ -49,6 +49,8 @@ Generate compatible answer with the original game.
 
 L<App::Greple>, L<https://github.com/kaz-utashiro/greple>
 
+L<https://github.com/alex1770/wordle>
+
 =head1 AUTHOR
 
 Kazumasa Utashiro
