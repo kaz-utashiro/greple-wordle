@@ -44,6 +44,8 @@
          "requires" : {
             "App::Greple" : "8.5602",
             "Date::Calc" : "0",
+            "Getopt::EX" : "v1.27.0",
+            "List::MoreUtils" : "0",
             "perl" : "v5.14.0"
          }
       },

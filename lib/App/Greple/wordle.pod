@@ -13,8 +13,8 @@ greple -Mwordle
 App::Greple::wordle is a greple module which implements wordle game.
 Correctness is checked by regular expression.
 
-Rule is almost same as original wordle but answer is different.  Set
-environment C<WORDLE_COMPAT=1> to get compatible answer.
+Rule is almost same as original wordle but answer is different.  Use
+B<--compat> option to get compatible answer.
 
 =begin html
 
@@ -22,28 +22,28 @@ environment C<WORDLE_COMPAT=1> to get compatible answer.
 
 =end html
 
-=head1 BUGS
-
-Wrong position character is colored yellow always, even if it is
-colored green in other position.
-
-=head1 ENVIRONMENT
+=head1 OPTIONS
 
 =over 7
 
-=item WORDLE_ANSWER
+=item B<--answer>=I<word>
 
 Set answer word.
 
-=item WORDLE_RANDOM
+=item B<--random>
 
 Generate random answer every time.
 
-=item WORDLE_COMPAT
+=item B<--compat>
 
 Generate compatible answer with the original game.
 
 =back
+
+=head1 BUGS
+
+Wrong position character is colored yellow always, even if it is
+colored green in other position.
 
 =head1 SEE ALSO
 
