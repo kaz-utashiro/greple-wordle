@@ -18,7 +18,7 @@ B<--compat> option to get compatible answer.
 
 =begin html
 
-<p><img width="50%" src="https://raw.githubusercontent.com/kaz-utashiro/greple-wordle/main/images/screen-2.png">
+<p><img width="75%" src="https://raw.githubusercontent.com/kaz-utashiro/greple-wordle/main/images/screen-2.png">
 
 =end html
 
