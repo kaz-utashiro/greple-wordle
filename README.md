@@ -16,7 +16,7 @@ Rule is almost same as original wordle but answer is different.  Use
 **--compat** option to get compatible answer.
 
 <div>
-    <p><img width="50%" src="https://raw.githubusercontent.com/kaz-utashiro/greple-wordle/main/images/screen.png">
+    <p><img width="50%" src="https://raw.githubusercontent.com/kaz-utashiro/greple-wordle/main/images/screen-2.png">
 </div>
 
 # OPTIONS
