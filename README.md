@@ -25,6 +25,10 @@ Rule is almost same as original wordle but answer is different.  Use
 
     Set answer word.
 
+- **--count**=_number_
+
+    Set try count.
+
 - **--random**
 
     Generate random answer every time.

@@ -17,14 +17,14 @@ my %cmap = (
     );
 
 sub keymap {
-    my %keys = make_keymap(@_);
+    my %keys = make_keymap(map lc, @_);
     my $keys = join '', map colorize($cmap{$keys{$_}//'_'}, $_), 'a'..'z';
     $keys;
 }
 
 sub make_keymap {
     my $answer = shift;
-    my %a = map { $_ => 1 } ( my @a = lc($answer) =~ /./g );
+    my %a = map { $_ => 1 } my @a = $answer =~ /./g;
     my %keys;
     for my $try (@_) {
 	my @b = $try =~ /./g;

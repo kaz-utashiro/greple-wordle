@@ -30,6 +30,10 @@ B<--compat> option to get compatible answer.
 
 Set answer word.
 
+=item B<--count>=I<number>
+
+Set try count.
+
 =item B<--random>
 
 Generate random answer every time.

@@ -13,22 +13,38 @@ use App::Greple::wordle::word_all    qw(%word_all);
 use App::Greple::wordle::word_hidden qw(@word_hidden);
 use App::Greple::wordle::hint qw(&keymap);
 
-our $try = 6;
-our $answer;
-our $random;
-our $compat;
-our $keymap = 1;
-my  $msg_correct = "\N{PARTY POPPER}";
-my  $msg_wrong   = "\N{COLLISION SYMBOL}";
-my  @answers;
+our %opt = ( answer  => \( our $answer      = $ENV{WORDLE_ANSWER} ),
+	     count   => \( our $try         = 6 ),
+	     max     => \( our $max         = 30 ),
+	     random  => \( our $random      = 0 ),
+	     compat  => \( our $compat      = 0 ),
+	     keymap  => \( our $keymap      = 1 ),
+	     correct => \( our $msg_correct = "\N{PARTY POPPER}" ),
+	     wrong   => \( our $msg_wrong   = "\N{COLLISION SYMBOL}" ),
+	   );
+my @answers;
 
-sub wordle_answer { $answer = {@_}->{answer}; () }
-sub wordle_random { $random = 1; () }
-sub wordle_compat { $compat = 1; () }
+sub respond {
+    print ansi_code("{CUU}{CUF(8)}");
+    print s/(?<=.)\z/\n/r for @_;
+}
 
-sub initialize {
+sub setopt {
+    my %arg = @_;
+    for (keys %opt) {
+	defined $arg{$_} or next;
+	if (ref $opt{$_}) {
+	    ${$opt{$_}} = $arg{$_};
+	} else {
+	    $opt{$_} = $arg{$_};
+	}
+    }
+    ();
+}
+
+sub finalize {
     my($mod, $argv) = @_;
-    push @$argv, '--interactive', ('/dev/stdin') x 30
+    push @$argv, '--interactive', ('/dev/stdin') x $max
 	if -t STDIN;
 }
 
@@ -49,10 +65,14 @@ sub wordle_patterns {
     map { ( '--re' => $_ ) } $green, $yellow, $black;
 }
 
+sub show_answer {
+    say colorize('#6aaa64', uc $answer);
+}
+
 sub check {
     chomp;
     if (not $word_all{lc $_}) {
-	say $msg_wrong;
+	respond $msg_wrong;
 	$_ = '';
     } else {
 	push @answers, $_;
@@ -62,21 +82,16 @@ sub check {
 
 sub inspect {
     if (lc $_ eq $answer) {
-	say $msg_correct;
+	respond $msg_correct;
 	exit 0;
     }
-    if ($try == 0) {
-	show_answer();
+    if ($try <= 0) {
+	show_answer;
 	exit 1;
     }
-    if (length) {
-	print ansi_code("{CUU}{CUF(8)}");
-	print keymap($answer, @answers), "\n" if $keymap;
+    if (length and $keymap) {
+	respond keymap($answer, @answers);
     }
-}
-
-sub show_answer {
-    say colorize('#6aaa64', uc $answer);
 }
 
 1;
@@ -88,9 +103,10 @@ mode function
 builtin keymap! $keymap
 
 option --wordle &wordle_patterns
-option --answer &wordle_answer(answer=$<shift>)
-option --random &wordle_random
-option --compat &wordle_compat
+option --answer &setopt(answer=$<shift>)
+option --count  &setopt(count=$<shift>)
+option --random &setopt(random=1)
+option --compat &setopt(compat=1)
 
 define GREEN  #6aaa64
 define YELLOW #c9b458
