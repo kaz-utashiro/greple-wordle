@@ -6,6 +6,7 @@ use utf8;
 our $VERSION = "0.02";
 
 use Data::Dumper;
+use List::Util qw(shuffle);
 use Date::Calc qw(Delta_Days);
 use charnames ':full';
 use Getopt::EX::Colormap qw(colorize ansi_code);
@@ -17,6 +18,7 @@ our %opt = ( answer  => \( our $answer      = $ENV{WORDLE_ANSWER} ),
 	     count   => \( our $try         = 6 ),
 	     max     => \( our $max         = 30 ),
 	     random  => \( our $random      = 0 ),
+	     seed    => \( our $seed        = 42 ),
 	     compat  => \( our $compat      = 0 ),
 	     keymap  => \( our $keymap      = 1 ),
 	     correct => \( our $msg_correct = "\N{PARTY POPPER}" ),
@@ -52,8 +54,8 @@ sub wordle_patterns {
     my($mday, $mon, $year, $yday) = (localtime(time))[3,4,5,7];
     my $index = Delta_Days(2021, 6, 19, $year + 1900, $mon + 1, $mday);
     if (not $compat) {
-	$random or srand($index);
-	$index = int rand(@word_hidden);
+	srand($seed) if not $random;
+	@word_hidden = shuffle @word_hidden;
     }
     $answer ||= $word_hidden[ $index ];
     $answer =~ /^[a-z]{5}$/i or die "$answer: wrong word\n";
