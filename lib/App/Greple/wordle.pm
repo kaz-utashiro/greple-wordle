@@ -83,7 +83,7 @@ sub check {
 }
 
 sub inspect {
-    if (lc $_ eq $answer) {
+    if (lc $_ eq lc $answer) {
 	respond $msg_correct;
 	exit 0;
     }
