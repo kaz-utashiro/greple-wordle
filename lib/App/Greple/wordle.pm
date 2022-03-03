@@ -6,7 +6,7 @@ use utf8;
 our $VERSION = "0.03";
 
 use Data::Dumper;
-use List::Util qw(shuffle);
+use List::Util qw(shuffle min max);
 use Date::Calc qw(Delta_Days);
 use charnames ':full';
 use Getopt::EX::Colormap qw(colorize ansi_code);
@@ -27,7 +27,10 @@ our %opt = ( answer  => \( our $answer      = $ENV{WORDLE_ANSWER} ),
 my @answers;
 
 sub respond {
-    print ansi_code("{CUU}{CUF(8)}");
+    local $_ = $_;
+    my $chomped = chomp;
+    print ansi_code("{CHA}{CUU}") if $chomped;
+    print ansi_code(sprintf("{CHA}{CUF(%d)}", max(8, (length) + 2)));
     print s/(?<=.)\z/\n/r for @_;
 }
 
@@ -72,13 +75,13 @@ sub show_answer {
 }
 
 sub check {
-    chomp;
-    if (not $word_all{lc $_}) {
+    if (not $word_all{lc s/\n//r}) {
 	respond $msg_wrong;
 	$_ = '';
     } else {
 	push @answers, $_;
 	$try--;
+	print ansi_code '{CUU}';
     }
 }
 
