@@ -31,7 +31,7 @@ sub respond {
     local $_ = $_;
     my $chomped = chomp;
     print ansi_code("{CHA}{CUU}") if $chomped;
-    print ansi_code(sprintf("{CHA}{CUF(%d)}", max(8, (length) + 2)));
+    print ansi_code(sprintf("{CHA}{CUF(%d)}", max(8, vwidth($_) + 2)));
     print s/(?<=.)\z/\n/r for @_;
 }
 
@@ -76,28 +76,28 @@ sub show_answer {
 }
 
 sub check {
-    if (not $word_all{lc s/\n//r}) {
+    my $it = lc s/\n//r;
+    if (not $word_all{$it}) {
 	respond $msg_wrong;
 	$_ = '';
     } else {
-	push @answers, $_;
-	$try--;
+	push @answers, $it;
 	print ansi_code '{CUU}';
     }
 }
 
 sub inspect {
-    if (lc $_ eq lc $answer) {
-	respond $msg_correct;
+    my $it = lc s/\n//r;
+    if (lc $it eq lc $answer) {
+	respond $msg_correct x $try;
 	exit 0;
     }
-    if ($try <= 0) {
+    length or return;
+    if (--$try <= 0) {
 	show_answer;
 	exit 1;
     }
-    if (length and $keymap) {
-	respond keymap($answer, @answers);
-    }
+    $keymap and respond keymap($answer, @answers);
 }
 
 1;
