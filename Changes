@@ -2,6 +2,11 @@ Revision history for Perl extension App-Greple-wordle
 
 {{$NEXT}}
 
+0.05 2022-03-04T10:04:44Z
+
+    - implement block result output
+    - introduce --index and --series option
+
 0.04 2022-03-04T01:10:43Z
 
     - update keymap format
