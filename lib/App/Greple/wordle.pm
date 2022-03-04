@@ -10,6 +10,7 @@ use List::Util qw(shuffle min max);
 use Date::Calc qw(Delta_Days);
 use charnames ':full';
 use Getopt::EX::Colormap qw(colorize ansi_code);
+use Text::VisualWidth::PP 0.05 'vwidth';
 use App::Greple::wordle::word_all    qw(%word_all);
 use App::Greple::wordle::word_hidden qw(@word_hidden);
 use App::Greple::wordle::hint qw(&keymap);
