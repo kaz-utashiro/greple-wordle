@@ -68,6 +68,8 @@ colored green in other position.
 
 L<App::Greple>, L<https://github.com/kaz-utashiro/greple>
 
+L<https://qiita.com/kaz-utashiro/items/ba6696187f2ce902aa39>
+
 L<https://github.com/alex1770/wordle>
 
 =head1 AUTHOR

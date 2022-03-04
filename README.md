@@ -61,6 +61,8 @@ colored green in other position.
 
 [App::Greple](https://metacpan.org/pod/App%3A%3AGreple), [https://github.com/kaz-utashiro/greple](https://github.com/kaz-utashiro/greple)
 
+[https://qiita.com/kaz-utashiro/items/ba6696187f2ce902aa39](https://qiita.com/kaz-utashiro/items/ba6696187f2ce902aa39)
+
 [https://github.com/alex1770/wordle](https://github.com/alex1770/wordle)
 
 # AUTHOR
