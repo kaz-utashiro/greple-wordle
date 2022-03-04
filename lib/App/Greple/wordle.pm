@@ -11,8 +11,7 @@ use Getopt::EX::Colormap qw(colorize ansi_code);
 use Text::VisualWidth::PP 0.05 'vwidth';
 use App::Greple::wordle::word_all    qw(%word_all);
 use App::Greple::wordle::word_hidden qw(@word_hidden);
-use App::Greple::wordle::hint qw(&keymap);
-use App::Greple::wordle::result qw(&result);
+use App::Greple::wordle::hint qw(&keymap &result);
 
 our %opt = ( answer  => \( our $answer      = $ENV{WORDLE_ANSWER} ),
 	     index   => \( our $index       = $ENV{WORDLE_INDEX} ),
