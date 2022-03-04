@@ -7,7 +7,6 @@ our $VERSION = "0.04";
 
 use Data::Dumper;
 use List::Util qw(shuffle min max);
-use charnames ':full';
 use Getopt::EX::Colormap qw(colorize ansi_code);
 use Text::VisualWidth::PP 0.05 'vwidth';
 use App::Greple::wordle::word_all    qw(%word_all);
@@ -24,8 +23,8 @@ our %opt = ( answer  => \( our $answer      = $ENV{WORDLE_ANSWER} ),
 	     compat  => \( our $compat      = 0 ),
 	     keymap  => \( our $keymap      = 1 ),
 	     result  => \( our $result      = 1 ),
-	     correct => \( our $msg_correct = "\N{PARTY POPPER}" ),
-	     wrong   => \( our $msg_wrong   = "\N{COLLISION SYMBOL}" ),
+	     correct => \( our $msg_correct = "\N{U+1F389}" ), # PARTY POPPER
+	     wrong   => \( our $msg_wrong   = "\N{U+1F4A5}" ), # COLLISION SYMBOL
 	   );
 my $try = 0;
 my @answers;

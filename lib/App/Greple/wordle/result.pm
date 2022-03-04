@@ -6,15 +6,14 @@ use utf8;
 use Exporter 'import';
 our @EXPORT_OK = qw(&result);
 
-use charnames ':full';
 use Data::Dumper;
 use List::MoreUtils qw(pairwise);
 use Getopt::EX::Colormap qw(colorize);
 
 my %square = (
-    G => "\N{LARGE GREEN SQUARE}",
-    Y => "\N{LARGE YELLOW SQUARE}",
-    K => "\N{WHITE LARGE SQUARE}",
+    G => "\N{U+1F7E9}", # LARGE GREEN SQUARE
+    Y => "\N{U+1F7E8}", # LARGE YELLOW SQUARE
+    K => "\N{U+2B1C}",  # WHITE LARGE SQUARE
     );
 
 sub result {
