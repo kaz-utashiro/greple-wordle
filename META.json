@@ -4,7 +4,7 @@
       "Kazumasa Utashiro"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Minilla/v3.1.15, CPAN::Meta::Converter version 2.150010",
+   "generated_by" : "Minilla/v3.1.12, CPAN::Meta::Converter version 2.150010",
    "license" : [
       "perl_5"
    ],
@@ -65,7 +65,7 @@
       "homepage" : "https://github.com/kaz-utashiro/greple-wordle",
       "repository" : {
          "type" : "git",
-         "url" : "https://github.com/kaz-utashiro/greple-wordle.git",
+         "url" : "git://github.com/kaz-utashiro/greple-wordle.git",
          "web" : "https://github.com/kaz-utashiro/greple-wordle"
       }
    },
