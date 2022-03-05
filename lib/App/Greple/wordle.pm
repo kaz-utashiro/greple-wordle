@@ -18,8 +18,7 @@ our %opt = ( answer  => \( our $answer      = $ENV{WORDLE_ANSWER} ),
 	     count   => \( our $count       = 6 ),
 	     max     => \( our $max         = 30 ),
 	     random  => \( our $random      = 0 ),
-	     seed    => \( our $seed        = 0 ),
-	     compat  => \( our $compat      = 0 ),
+	     seed    => \( our $seed        = 1 ),
 	     keymap  => \( our $keymap      = 1 ),
 	     result  => \( our $result      = 1 ),
 	     correct => \( our $msg_correct = "\N{U+1F389}" ), # PARTY POPPER
@@ -64,8 +63,8 @@ sub days {
 sub wordle_patterns {
     $index   = rand(@word_hidden) if $random;
     $index //= days;
-    $index  += days if $index < 0;
-    if (not $compat) {
+    $index  += days if $index =~ /^[-+]/;
+    if ($seed > 0) {
 	srand($seed);
 	@word_hidden = shuffle @word_hidden;
     }
@@ -84,10 +83,10 @@ sub show_answer {
 }
 
 sub show_result {
-    printf("\n%s %d%s %d/%d\n\n",
-	   $compat ? 'Wordle?' : 'Greple::wordle',
+    printf("\n%s %d%s %d/%d\n",
+	   'Greple::wordle',
 	   $index,
-	   $compat || $seed == 0 ? '' : "($seed)",
+	   $seed == 0 ? '' : "($seed)",
 	   $try + 1, $count);
     say result($answer, @answers);
 }
@@ -133,7 +132,7 @@ option --answer &setopt(answer=$<shift>)
 option --index  &setopt(index=$<shift>)
 option --series &setopt(seed=$<shift>)
 option --random &setopt(random=1)
-option --compat &setopt(compat=1)
+option --compat &setopt(seed=0)
 
 define GREEN  #6aaa64
 define YELLOW #c9b458

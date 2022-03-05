@@ -21,11 +21,14 @@ Rule is almost same as original wordle but answer is different.  Use
 
 # OPTIONS
 
+- **--series**=_number_
 - **--compat**
 
-    Generate compatible answer with the original game.  Otherwise, this
-    game uses unique sequence using same answer word set as the original
-    Wordle.
+    Choose different series of answers.  Default 1.  Series zero is same
+    as original game and option **--compat** is a short cut for
+    **--series=0**.  If it is not zero, original answer word set is
+    shuffled by pseudo random numbers using series number as an initial
+    seed.
 
 - **--**\[**no-**\]**result**
 
@@ -35,10 +38,6 @@ Rule is almost same as original wordle but answer is different.  Use
 
     Specify index. Index is calculated from days from 2021/06/19.  If the
     value is negative and you can get yesterday's question by giving -1.
-
-- **--series**=_number_
-
-    Choose different series of answers.  Default zero.
 
 - **--random**
 
@@ -57,7 +56,17 @@ Rule is almost same as original wordle but answer is different.  Use
 Wrong position character is colored yellow always, even if it is
 colored green in other position.
 
+# INSTALL
+
+## CPANMINUS
+
+    $ cpanm App::Greple::wordle
+    or
+    $ curl -sL http://cpanmin.us | perl - App::Greple::wordle
+
 # SEE ALSO
+
+[App::Greple::wordle](https://metacpan.org/pod/App%3A%3AGreple%3A%3Awordle), [https://github.com/kaz-utashiro/greple-wordle](https://github.com/kaz-utashiro/greple-wordle)
 
 [App::Greple](https://metacpan.org/pod/App%3A%3AGreple), [https://github.com/kaz-utashiro/greple](https://github.com/kaz-utashiro/greple)
 

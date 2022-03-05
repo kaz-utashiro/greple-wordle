@@ -26,11 +26,15 @@ B<--compat> option to get compatible answer.
 
 =over 7
 
+=item B<--series>=I<number>
+
 =item B<--compat>
 
-Generate compatible answer with the original game.  Otherwise, this
-game uses unique sequence using same answer word set as the original
-Wordle.
+Choose different series of answers.  Default 1.  Series zero is same
+as original game and option B<--compat> is a short cut for
+B<--series=0>.  If it is not zero, original answer word set is
+shuffled by pseudo random numbers using series number as an initial
+seed.
 
 =item B<-->[B<no->]B<result>
 
@@ -40,10 +44,6 @@ Show result when succeeded.  Default true.
 
 Specify index. Index is calculated from days from 2021/06/19.  If the
 value is negative and you can get yesterday's question by giving -1.
-
-=item B<--series>=I<number>
-
-Choose different series of answers.  Default zero.
 
 =item B<--random>
 
@@ -64,7 +64,17 @@ Set answer word.  For debug purpose.
 Wrong position character is colored yellow always, even if it is
 colored green in other position.
 
+=head1 INSTALL
+
+=head2 CPANMINUS
+
+    $ cpanm App::Greple::wordle
+    or
+    $ curl -sL http://cpanmin.us | perl - App::Greple::wordle
+
 =head1 SEE ALSO
+
+L<App::Greple::wordle>, L<https://github.com/kaz-utashiro/greple-wordle>
 
 L<App::Greple>, L<https://github.com/kaz-utashiro/greple>
 
