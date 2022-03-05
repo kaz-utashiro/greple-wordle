@@ -83,10 +83,10 @@ sub show_answer {
 }
 
 sub show_result {
-    printf("\n%s %d%s %d/%d\n",
+    printf("\n%s %s%s %d/%d\n\n",
 	   'Greple::wordle',
+	   $seed == 0 ? '' : "$seed-",
 	   $index,
-	   $seed == 0 ? '' : "($seed)",
 	   $try + 1, $count);
     say result($answer, @answers);
 }
