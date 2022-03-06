@@ -13,13 +13,10 @@ use App::Greple::wordle::word_all    qw(%word_all);
 use App::Greple::wordle::word_hidden qw(@word_hidden);
 use App::Greple::wordle::hint qw(&keymap &result);
 
-my $try = 0;
-my @answers;
-
 use Getopt::EX::Hashed; {
     Getopt::EX::Hashed->configure( DEFAULT => [ is => 'rw' ] ) ;
     has answer  => ' =s   ' , default => $ENV{WORDLE_ANSWER} ;
-    has index   => ' =s   ' , default => $ENV{WORDLE_INDEX} ;
+    has index   => ' =s n ' , default => $ENV{WORDLE_INDEX} , any => qr/^[-+]?\d+$/;
     has count   => ' =i   ' , default => 6 ;
     has max     => ' =i   ' , default => 30 ;
     has random  => ' !    ' , default => 0 ;
@@ -29,6 +26,9 @@ use Getopt::EX::Hashed; {
     has result  => ' !    ' , default => 1 ;
     has correct => ' =s   ' , default => "\N{U+1F389}" ; # PARTY POPPER
     has wrong   => ' =s   ' , default => "\N{U+1F4A5}" ; # COLLISION SYMBOL
+
+    has try     => default => 0;
+    has answers => default => [];
 }
 no Getopt::EX::Hashed;
 
@@ -38,7 +38,7 @@ sub initialize {
     my($mod, $argv) = @_;
     use Getopt::Long qw(GetOptionsFromArray Configure);
     Configure qw(bundling no_getopt_compat pass_through);
-    $app->getopt($argv) || die;
+    $app->getopt($argv) || die "Option parse error.\n";
 }
 
 sub finalize {
@@ -92,8 +92,8 @@ sub show_result {
 	   'Greple::wordle',
 	   $app->series == 0 ? '' : sprintf("%d-", $app->series),
 	   $app->index,
-	   $try + 1, $app->count);
-    say result($app->answer, @answers);
+	   $app->try + 1, $app->count);
+    say result($app->answer, @{$app->answers});
 }
 
 sub check {
@@ -102,7 +102,7 @@ sub check {
 	respond $app->wrong;
 	$_ = '';
     } else {
-	push @answers, $it;
+	push @{$app->answers}, $it;
 	print ansi_code '{CUU}';
     }
 }
@@ -110,16 +110,16 @@ sub check {
 sub inspect {
     my $it = lc s/\n//r;
     if (lc $it eq lc $app->answer) {
-	respond $app->correct x ($app->count - $try);
+	respond $app->correct x ($app->count - $app->try);
 	show_result if $app->result;
 	exit 0;
     }
     length or return;
-    if (++$try >= $app->count) {
+    if (++$app->{try} >= $app->count) {
 	show_answer;
 	exit 1;
     }
-    $app->keymap and respond keymap($app->answer, @answers);
+    $app->keymap and respond keymap($app->answer, @{$app->answers});
 }
 
 1;
