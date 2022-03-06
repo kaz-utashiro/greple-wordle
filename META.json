@@ -69,7 +69,7 @@
          "web" : "https://github.com/kaz-utashiro/greple-wordle"
       }
    },
-   "version" : "0.05",
+   "version" : "0.06",
    "x_authority" : "cpan:UTASHIRO",
    "x_contributors" : [
       "Kazumasa Utashiro <kaz@utashiro.com>"
