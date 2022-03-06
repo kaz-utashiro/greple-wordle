@@ -45,6 +45,7 @@
             "App::Greple" : "8.5602",
             "Date::Calc" : "0",
             "Getopt::EX" : "v1.27.0",
+            "Getopt::EX::Hashed" : "1.03",
             "List::MoreUtils" : "0",
             "List::Util" : "0",
             "Text::VisualWidth::PP" : "0.05",

@@ -13,19 +13,39 @@ use App::Greple::wordle::word_all    qw(%word_all);
 use App::Greple::wordle::word_hidden qw(@word_hidden);
 use App::Greple::wordle::hint qw(&keymap &result);
 
-our %opt = ( answer  => \( our $answer      = $ENV{WORDLE_ANSWER} ),
-	     index   => \( our $index       = $ENV{WORDLE_INDEX} ),
-	     count   => \( our $count       = 6 ),
-	     max     => \( our $max         = 30 ),
-	     random  => \( our $random      = 0 ),
-	     seed    => \( our $seed        = 1 ),
-	     keymap  => \( our $keymap      = 1 ),
-	     result  => \( our $result      = 1 ),
-	     correct => \( our $msg_correct = "\N{U+1F389}" ), # PARTY POPPER
-	     wrong   => \( our $msg_wrong   = "\N{U+1F4A5}" ), # COLLISION SYMBOL
-	   );
 my $try = 0;
 my @answers;
+
+use Getopt::EX::Hashed; {
+    Getopt::EX::Hashed->configure( DEFAULT => [ is => 'rw' ] ) ;
+    has answer  => ' =s   ' , default => $ENV{WORDLE_ANSWER} ;
+    has index   => ' =s   ' , default => $ENV{WORDLE_INDEX} ;
+    has count   => ' =i   ' , default => 6 ;
+    has max     => ' =i   ' , default => 30 ;
+    has random  => ' !    ' , default => 0 ;
+    has series  => ' =s s ' , default => 1 ;
+    has compat  => '      ' , action  => sub { $_->{series} = 0 } ;
+    has keymap  => ' !    ' , default => 1 ;
+    has result  => ' !    ' , default => 1 ;
+    has correct => ' =s   ' , default => "\N{U+1F389}" ; # PARTY POPPER
+    has wrong   => ' =s   ' , default => "\N{U+1F4A5}" ; # COLLISION SYMBOL
+}
+no Getopt::EX::Hashed;
+
+my $app = Getopt::EX::Hashed->new or die;
+
+sub initialize {
+    my($mod, $argv) = @_;
+    use Getopt::Long qw(GetOptionsFromArray Configure);
+    Configure qw(bundling no_getopt_compat pass_through);
+    $app->getopt($argv) || die;
+}
+
+sub finalize {
+    my($mod, $argv) = @_;
+    push @$argv, '--interactive', ('/dev/stdin') x $app->max
+	if -t STDIN;
+}
 
 sub respond {
     local $_ = $_;
@@ -35,25 +55,6 @@ sub respond {
     print s/(?<=.)\z/\n/r for @_;
 }
 
-sub setopt {
-    my %arg = @_;
-    for (keys %opt) {
-	defined $arg{$_} or next;
-	if (ref $opt{$_}) {
-	    ${$opt{$_}} = $arg{$_};
-	} else {
-	    $opt{$_} = $arg{$_};
-	}
-    }
-    ();
-}
-
-sub finalize {
-    my($mod, $argv) = @_;
-    push @$argv, '--interactive', ('/dev/stdin') x $max
-	if -t STDIN;
-}
-
 sub days {
     use Date::Calc qw(Delta_Days);
     my($mday, $mon, $year, $yday) = (localtime(time))[3,4,5,7];
@@ -61,40 +62,44 @@ sub days {
 }
 
 sub wordle_patterns {
-    $index   = rand(@word_hidden) if $random;
-    $index //= days;
-    $index  += days if $index =~ /^[-+]/;
-    if ($seed > 0) {
-	srand($seed);
+    for ($app->{index}) {
+	$_   = int rand @word_hidden if $app->random;
+	$_ //= days;
+	$_  += days if /^[-+]/;
+    }
+    if ($app->series > 0) {
+	srand($app->series);
 	@word_hidden = shuffle @word_hidden;
     }
-    $answer ||= $word_hidden[ $index ];
+    my $answer = $app->answer;
+    $answer ||= $word_hidden[ $app->index ];
     $answer =~ /^[a-z]{5}$/i or die "$answer: wrong word\n";
 
     my $green  = join '|', map sprintf("(?<=^.{%d})%s", $_, substr($answer, $_, 1)), 0..4;
     my $yellow = "[$answer]";
     my $black  = "(?=[a-z])[^$answer]";
 
+    $app->answer($answer);
     map { ( '--re' => $_ ) } $green, $yellow, $black;
 }
 
 sub show_answer {
-    say colorize('#6aaa64', uc $answer);
+    say colorize('#6aaa64', uc $app->answer);
 }
 
 sub show_result {
     printf("\n%s %s%s %d/%d\n\n",
 	   'Greple::wordle',
-	   $seed == 0 ? '' : "$seed-",
-	   $index,
-	   $try + 1, $count);
-    say result($answer, @answers);
+	   $app->series == 0 ? '' : sprintf("%d-", $app->series),
+	   $app->index,
+	   $try + 1, $app->count);
+    say result($app->answer, @answers);
 }
 
 sub check {
     my $it = lc s/\n//r;
     if (not $word_all{$it}) {
-	respond $msg_wrong;
+	respond $app->wrong;
 	$_ = '';
     } else {
 	push @answers, $it;
@@ -104,17 +109,17 @@ sub check {
 
 sub inspect {
     my $it = lc s/\n//r;
-    if (lc $it eq lc $answer) {
-	respond $msg_correct x ($count - $try);
-	show_result if $result;
+    if (lc $it eq lc $app->answer) {
+	respond $app->correct x ($app->count - $try);
+	show_result if $app->result;
 	exit 0;
     }
     length or return;
-    if (++$try >= $count) {
+    if (++$try >= $app->count) {
 	show_answer;
 	exit 1;
     }
-    $keymap and respond keymap($answer, @answers);
+    $app->keymap and respond keymap($app->answer, @answers);
 }
 
 1;
@@ -123,16 +128,7 @@ __DATA__
 
 mode function
 
-builtin count=i $count
-builtin keymap! $keymap
-builtin result! $result
-
 option --wordle &wordle_patterns
-option --answer &setopt(answer=$<shift>)
-option --index  &setopt(index=$<shift>)
-option --series &setopt(seed=$<shift>)
-option --random &setopt(random=1)
-option --compat &setopt(seed=0)
 
 define GREEN  #6aaa64
 define YELLOW #c9b458
