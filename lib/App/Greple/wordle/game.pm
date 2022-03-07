@@ -1,19 +1,36 @@
-package App::Greple::wordle::hint;
+package App::Greple::wordle::game;
 use v5.14;
 use warnings;
-
-use Exporter 'import';
-our @EXPORT_OK;
 
 use Data::Dumper;
 use List::MoreUtils qw(pairwise);
 use Getopt::EX::Colormap qw(colorize);
 
+use Mo qw(is required default); {
+    has answer   => ( is => 'ro', required => 1 );
+    has attempts => ( default => [] );
+}
+no Mo;
+
+sub try {
+    my $obj = shift;
+    push @{$obj->{attempts}}, @_;
+    $obj->solved;
+}
+
+sub attempt {
+    my $obj = shift;
+    int @{$obj->{attempts}};
+}
+
+sub solved {
+    my $obj = shift;
+    lc $obj->{answer} eq lc $obj->{attempts}->[-1];
+}
+
 ######################################################################
 # keymap
 ######################################################################
-
-push @EXPORT_OK, qw(&get_keymap);
 
 my %cmap = (
     G => '555/#6aaa64',
@@ -22,13 +39,14 @@ my %cmap = (
     _ => '555/#787c7e',
     );
 
-sub get_keymap {
-    my %keys = make_keymap(map lc, @_);
+sub keymap {
+    my $obj = shift;
+    my %keys = _keymap(map { lc } $obj->{answer}, @{$obj->{attempts}});
     my $keys = join '', map colorize($cmap{$keys{$_}//'_'}, $_), 'a'..'z';
     $keys;
 }
 
-sub make_keymap {
+sub _keymap {
     my $answer = shift;
     my %a = map { $_ => 1 } my @a = $answer =~ /./g;
     my %keys;
@@ -44,21 +62,20 @@ sub make_keymap {
 # result
 ######################################################################
 
-push @EXPORT_OK, qw(&get_result);
-
 my %square = (
     G => "\N{U+1F7E9}", # LARGE GREEN SQUARE
     Y => "\N{U+1F7E8}", # LARGE YELLOW SQUARE
     K => "\N{U+2B1C}",  # WHITE LARGE SQUARE
     );
 
-sub get_result {
-    my @result = make_result(map lc, @_);
+sub result {
+    my $obj = shift;
+    my @result = _result(map lc, $obj->{answer}, @{$obj->{attempts}});
     my $result = join "\n", map s/([GYK])/$square{$1}/ger, @result;
     $result;
 }
 
-sub make_result {
+sub _result {
     my $answer = shift;
     my %a = map { $_ => 1 } my @a = $answer =~ /./g;
     map {

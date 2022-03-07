@@ -7,6 +7,7 @@ requires 'List::Util';
 requires 'List::MoreUtils';
 requires 'Date::Calc';
 requires 'Text::VisualWidth::PP', '0.05';
+requires 'Mo';
 
 on 'test' => sub {
     requires 'Test::More', '0.98';
