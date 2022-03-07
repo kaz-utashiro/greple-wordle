@@ -2,6 +2,10 @@ Revision history for Perl extension App-Greple-wordle
 
 {{$NEXT}}
 
+0.07 2022-03-07T02:34:04Z
+
+    - implement original option parser
+
 0.06 2022-03-06T02:49:25Z
 
     - integrate --compat option into --series
