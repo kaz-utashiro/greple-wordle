@@ -13,12 +13,12 @@ greple -Mwordle
 App::Greple::wordle is a greple module which implements wordle game.
 Correctness is checked by regular expression.
 
-Rule is almost same as original wordle but answer is different.  Use
+Rule is almost same as the original game but answer is different.  Use
 B<--compat> option to get compatible answer.
 
 =begin html
 
-<p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/greple-wordle/main/images/screen-4.png">
+<p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/greple-wordle/main/images/screen-5.png">
 
 =end html
 
@@ -26,12 +26,12 @@ B<--compat> option to get compatible answer.
 
 =over 7
 
-=item B<--series>=I<number>
+=item B<--series>=I<number>,  B<-s>I<number>
 
 =item B<--compat>
 
-Choose different series of answers.  Default 1.  Series zero is same
-as original game and option B<--compat> is a short cut for
+Choose different series of answer.  Default 1.  Series zero is same as
+the original game and option B<--compat> is a short cut for
 B<--series=0>.  If it is not zero, original answer word set is
 shuffled by pseudo random numbers using series number as an initial
 seed.
@@ -40,22 +40,27 @@ seed.
 
 Show result when succeeded.  Default true.
 
-=item B<--index>=I<number>
+=item B<--index>=I<number>, B<-n>I<number>
 
-Specify index. Index is calculated from days from 2021/06/19.  If the
-value is negative and you can get yesterday's question by giving -1.
+Specify index. Default index is calculated from days from 2021/06/19.
+If the value is negative and you can get yesterday's question by
+giving -1.
 
 =item B<--random>
 
 Generate random index every time.
 
-=item B<--count>=I<number>
+=item B<--try>=I<number>
 
 Set try count.  Default 6.
+
+=begin comment
 
 =item B<--answer>=I<word>
 
 Set answer word.  For debug purpose.
+
+=end comment
 
 =back
 

@@ -12,20 +12,20 @@ greple -Mwordle
 App::Greple::wordle is a greple module which implements wordle game.
 Correctness is checked by regular expression.
 
-Rule is almost same as original wordle but answer is different.  Use
+Rule is almost same as the original game but answer is different.  Use
 **--compat** option to get compatible answer.
 
 <div>
-    <p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/greple-wordle/main/images/screen-4.png">
+    <p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/greple-wordle/main/images/screen-5.png">
 </div>
 
 # OPTIONS
 
-- **--series**=_number_
+- **--series**=_number_,  **-s**_number_
 - **--compat**
 
-    Choose different series of answers.  Default 1.  Series zero is same
-    as original game and option **--compat** is a short cut for
+    Choose different series of answer.  Default 1.  Series zero is same as
+    the original game and option **--compat** is a short cut for
     **--series=0**.  If it is not zero, original answer word set is
     shuffled by pseudo random numbers using series number as an initial
     seed.
@@ -34,22 +34,19 @@ Rule is almost same as original wordle but answer is different.  Use
 
     Show result when succeeded.  Default true.
 
-- **--index**=_number_
+- **--index**=_number_, **-n**_number_
 
-    Specify index. Index is calculated from days from 2021/06/19.  If the
-    value is negative and you can get yesterday's question by giving -1.
+    Specify index. Default index is calculated from days from 2021/06/19.
+    If the value is negative and you can get yesterday's question by
+    giving -1.
 
 - **--random**
 
     Generate random index every time.
 
-- **--count**=_number_
+- **--try**=_number_
 
     Set try count.  Default 6.
-
-- **--answer**=_word_
-
-    Set answer word.  For debug purpose.
 
 # BUGS
 
