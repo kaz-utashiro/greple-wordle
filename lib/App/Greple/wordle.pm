@@ -55,6 +55,7 @@ sub get_index {
 
 my $app = __PACKAGE__->new or die;
 my $game;
+my $interactive;
 
 sub initialize {
     my($mod, $argv) = @_;
@@ -64,8 +65,10 @@ sub initialize {
     $game = App::Greple::wordle::game->new(answer => $answer);
 
     push @$argv, wordle_patterns($answer);
-    push @$argv, '--interactive', ('/dev/stdin') x $app->{total}
-	if -t STDIN;
+
+    if ($interactive = -t STDIN) {
+	push @$argv, '--interactive', ('/dev/stdin') x $app->{total};
+    }
 }
 
 sub respond {
@@ -120,7 +123,7 @@ sub check {
 	$_ = '';
     } else {
 	$game->try($it);
-	print ansi_code '{CUU}' if -t STDIN;
+	print ansi_code '{CUU}' if $interactive;
     }
 }
 
