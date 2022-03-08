@@ -3,6 +3,7 @@ use v5.14;
 use warnings;
 
 use Data::Dumper;
+use List::Util qw(any);
 use List::MoreUtils qw(pairwise);
 use Getopt::EX::Colormap qw(colorize);
 
@@ -25,7 +26,7 @@ sub attempt {
 
 sub solved {
     my $obj = shift;
-    lc $obj->{answer} eq lc $obj->{attempts}->[-1];
+    any { lc eq lc $obj->{answer} } @{$obj->{attempts}};
 }
 
 ######################################################################

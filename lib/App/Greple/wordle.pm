@@ -14,17 +14,17 @@ use App::Greple::wordle::word_hidden qw(@word_hidden);
 use App::Greple::wordle::game;
 
 use Getopt::EX::Hashed; {
-    has answer  => ' =s   ' , default => $ENV{WORDLE_ANSWER} ;
-    has index   => ' =s n ' , default => $ENV{WORDLE_INDEX} , any => qr/^[-+]?\d+$/;
-    has try     => ' =i   ' , default => 6 ;
-    has total   => ' =i   ' , default => 30 ;
-    has random  => ' !    ' , default => 0 ;
-    has series  => ' =s s ' , default => 1 ;
+    has answer  => '   =s ' , default => $ENV{WORDLE_ANSWER} ;
+    has index   => ' n =i ' , default => $ENV{WORDLE_INDEX} ;
+    has try     => '   =i ' , default => 6 ;
+    has total   => '   =i ' , default => 30 ;
+    has random  => '   !  ' , default => 0 ;
+    has series  => ' s =i ' , default => 1 ;
     has compat  => '      ' , action  => sub { $_->{series} = 0 } ;
-    has keymap  => ' !    ' , default => 1 ;
-    has result  => ' !    ' , default => 1 ;
-    has correct => ' =s   ' , default => "\N{U+1F389}" ; # PARTY POPPER
-    has wrong   => ' =s   ' , default => "\N{U+1F4A5}" ; # COLLISION SYMBOL
+    has keymap  => '   !  ' , default => 1 ;
+    has result  => '   !  ' , default => 1 ;
+    has correct => '   =s ' , default => "\N{U+1F389}" ; # PARTY POPPER
+    has wrong   => '   =s ' , default => "\N{U+1F4A5}" ; # COLLISION SYMBOL
 }
 no Getopt::EX::Hashed;
 
@@ -120,7 +120,7 @@ sub check {
 	$_ = '';
     } else {
 	$game->try($it);
-	print ansi_code '{CUU}';
+	print ansi_code '{CUU}' if -t STDIN;
     }
 }
 
