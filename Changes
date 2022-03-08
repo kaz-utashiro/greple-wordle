@@ -2,6 +2,10 @@ Revision history for Perl extension App-Greple-wordle
 
 {{$NEXT}}
 
+0.08 2022-03-08T01:05:18Z
+
+    - use oo interface to keep game status
+
 0.07 2022-03-07T02:34:04Z
 
     - implement original option parser
