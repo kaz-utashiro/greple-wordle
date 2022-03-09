@@ -48,6 +48,28 @@ Rule is almost same as the original game but answer is different.  Use
 
     Set try count.  Default 6.
 
+# COMMANDS
+
+Five letter word is processed as an answer.  Some other input is taken
+as a command.
+
+- **hint**
+
+    List possible words.
+
+- **uniq**
+
+    List possible words made of unique characters.
+
+- **/**_chars_
+
+    If start with slash, list words which does not include any of
+    _chars_.
+
+- _regex_
+
+    Any other string is taken as a regular expression to filter words.
+
 # BUGS
 
 Wrong position character is colored yellow always, even if it is

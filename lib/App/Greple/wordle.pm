@@ -9,9 +9,10 @@ use Data::Dumper;
 use List::Util qw(shuffle max);
 use Getopt::EX::Colormap qw(colorize ansi_code);
 use Text::VisualWidth::PP 0.05 'vwidth';
-use App::Greple::wordle::word_all    qw(%word_all);
+use App::Greple::wordle::word_all    qw(@word_all %word_all);
 use App::Greple::wordle::word_hidden qw(@word_hidden);
 use App::Greple::wordle::game;
+use App::Greple::wordle::util qw(uniqword);
 
 use Getopt::EX::Hashed; {
     has answer  => '   =s ' , default => $ENV{WORDLE_ANSWER} ;
@@ -25,14 +26,9 @@ use Getopt::EX::Hashed; {
     has result  => '   !  ' , default => 1 ;
     has correct => '   =s ' , default => "\N{U+1F389}" ; # PARTY POPPER
     has wrong   => '   =s ' , default => "\N{U+1F4A5}" ; # COLLISION SYMBOL
+    has debug   => '   !  ' ;
 }
 no Getopt::EX::Hashed;
-
-sub _days {
-    use Date::Calc qw(Delta_Days);
-    my($mday, $mon, $year, $yday) = (localtime(time))[3,4,5,7];
-    Delta_Days(2021, 6, 19, $year + 1900, $mon + 1, $mday);
-}
 
 sub parseopt {
     my $app = shift;
@@ -43,6 +39,12 @@ sub parseopt {
     $app;
 }
 
+sub _days {
+    use Date::Calc qw(Delta_Days);
+    my($mday, $mon, $year, $yday) = (localtime(time))[3,4,5,7];
+    Delta_Days(2021, 6, 19, $year + 1900, $mon + 1, $mday);
+}
+
 sub setup {
     my $app = shift;
     for ($app->{index}) {
@@ -51,8 +53,8 @@ sub setup {
 	$_  += _days if /^[-+]/;
     }
     if (my $answer = $app->{answer}) {
-	$app->{series} = $app->{index} = 99999;
-	$answer =~ /^[a-z]{5}$/i or die "$answer: wrong word\n";
+	$app->{index} = undef;
+	$word_all{$answer} or die "$answer: wrong word\n";
     } else {
 	if ($app->{series} > 0) {
 	    srand($app->{series});
@@ -76,8 +78,10 @@ sub patterns {
 
 sub title {
     my $app = shift;
+    my $label = 'Greple::wordle';
+    return $label if not defined $app->{index};
     sprintf('%s %s%s',
-	    'Greple::wordle',
+	    $label,
 	    $app->{series} == 0 ? '' : sprintf("%d-", $app->{series}),
 	    $app->{index});
 }
@@ -119,12 +123,37 @@ sub show_result {
 sub check {
     my $word = lc s/\n//r;
     if (not $word_all{$word}) {
-	respond $app->{wrong};
+	command($word) or respond $app->{wrong};
 	$_ = '';
     } else {
 	$game->try($word);
 	print ansi_code '{CUU}' if $interactive;
     }
+}
+
+sub command {
+    my $word = shift;
+    $word =~ m{^/(?<chrs>\w+)|(?=.*\W)(?<re>.+)|hint|uniq$}i or return;
+    my $pattern = do {
+	if (my $chrs = $+{chrs}) {
+	    '^' . join '', map { "(?=.*$_)" } $chrs =~ /./g;
+	} else {
+	    $+{re} || $game->hint;
+	}
+    };
+    say $pattern if $app->{debug};
+    my $re = eval { qr/$pattern/i } or return;
+    my @match = grep /$re/, @word_all;
+    if ($word eq 'uniq') {
+	if (my @uniq = uniqword(@match)) {
+	    @match = @uniq;
+	} else {
+	    warn "No word using unique chars.\n";
+	}
+    }
+    @match = $game->hint_color(@match);
+    do { local $, = ' '; say @match };
+    1;
 }
 
 sub inspect {

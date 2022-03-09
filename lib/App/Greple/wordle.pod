@@ -64,6 +64,32 @@ Set answer word.  For debug purpose.
 
 =back
 
+=head1 COMMANDS
+
+Five letter word is processed as an answer.  Some other input is taken
+as a command.
+
+=over 7
+
+=item B<hint>
+
+List possible words.
+
+=item B<uniq>
+
+List possible words made of unique characters.
+
+=item B</>I<chars>
+
+If start with slash, list words which does not include any of
+I<chars>.
+
+=item I<regex>
+
+Any other string is taken as a regular expression to filter words.
+
+=back
+
 =head1 BUGS
 
 Wrong position character is colored yellow always, even if it is
