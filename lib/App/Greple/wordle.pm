@@ -7,6 +7,7 @@ our $VERSION = "0.09";
 
 use Data::Dumper;
 use List::Util qw(shuffle max);
+use Try::Tiny;
 use Getopt::EX::Colormap qw(colorize ansi_code);
 use Text::VisualWidth::PP 0.05 'vwidth';
 use App::Greple::wordle::word_all    qw(@word_all %word_all);
@@ -17,7 +18,7 @@ use App::Greple::wordle::util qw(uniqword);
 use Getopt::EX::Hashed; {
     has answer  => '   =s ' , default => $ENV{WORDLE_ANSWER} ;
     has index   => ' n =i ' , default => $ENV{WORDLE_INDEX} ;
-    has try     => '   =i ' , default => 6 ;
+    has try     => ' x =i ' , default => 6 ;
     has total   => '   =i ' , default => 30 ;
     has random  => '   !  ' , default => 0 ;
     has series  => ' s =i ' , default => 1 ;
@@ -92,6 +93,10 @@ my $app = __PACKAGE__->new or die;
 my $game;
 my $interactive;
 
+sub prompt {
+    printf '%d: ', $game->attempt + 1;
+}
+
 sub initialize {
     my($mod, $argv) = @_;
     $app->parseopt($argv)->setup;
@@ -99,15 +104,17 @@ sub initialize {
     push @$argv, $app->patterns;
     if ($interactive = -t STDIN) {
 	push @$argv, '--interactive', ('/dev/stdin') x $app->{total};
+	select->autoflush;
+	say $app->title;
+	prompt();
     }
-    say $app->title;
 }
 
 sub respond {
     local $_ = $_;
     my $chomped = chomp;
     print ansi_code("{CHA}{CUU}") if $chomped;
-    print ansi_code(sprintf("{CHA}{CUF(%d)}", max(8, vwidth($_) + 2)));
+    print ansi_code(sprintf("{CHA(%d)}", max(8, vwidth($_) + 2)));
     print s/(?<=.)\z/\n/r for @_;
 }
 
@@ -127,33 +134,46 @@ sub check {
 	$_ = '';
     } else {
 	$game->try($word);
-	print ansi_code '{CUU}' if $interactive;
     }
 }
 
 sub command {
     my $word = shift;
-    $word =~ m{^/(?<chrs>\w+)|(?=.*\W)(?<re>.+)|hint|uniq$}i or return;
-    my $pattern = do {
-	if (my $chrs = $+{chrs}) {
-	    '^' . join '', map { "(?=.*$_)" } $chrs =~ /./g;
-	} else {
-	    $+{re} || $game->hint;
-	}
-    };
-    say $pattern if $app->{debug};
-    my $re = eval { qr/$pattern/i } or return;
-    my @match = grep /$re/, @word_all;
-    if ($word eq 'uniq') {
-	if (my @uniq = uniqword(@match)) {
-	    @match = @uniq;
-	} else {
-	    warn "No word using unique chars.\n";
-	}
+    my @cmd = split ' ', $word or return;
+    my @word = @word_all;
+    $cmd[0] =~ /^u(niq)?$/ and unshift @cmd, 'hint';
+
+    for (@cmd) {
+	try {
+	    if    ($_ eq '|')   {}
+	    elsif (/^h(int)?$/) { @word = choose($game->hint, @word) }
+	    elsif (/^u(niq)?$/) { @word = uniqword(@word) }
+	    elsif (m{^=(.+)})   { @word = choose(includes($1), @word) }
+	    elsif (m{^!(.+)})   { @word = choose("^(?!.*[$1])", @word) }
+	    elsif (/\W/)        { @word = choose($_, @word); }
+	    else  { return }
+	    1;
+	} or return;
     }
-    @match = $game->hint_color(@match);
-    do { local $, = ' '; say @match };
+    if (@word == 0) {
+	warn "No match\n";
+	return 1;
+    }
+    my @match = $game->hint_color(@word);
+    do {
+	local $, = ' ';
+	say @match;
+    };
     1;
+}
+
+sub includes {
+    '^' . join '', map { "(?=.*$_)" } $_[0] =~ /./g;
+}
+
+sub choose {
+    my $p = shift;
+    grep /$p/, @_;
 }
 
 sub inspect {
@@ -162,12 +182,14 @@ sub inspect {
 	show_result if $app->{result};
 	exit 0;
     }
-    length or return;
-    if ($game->attempt >= $app->{try}) {
-	show_answer;
-	exit 1;
+    if (length) {
+	if ($game->attempt >= $app->{try}) {
+	    show_answer;
+	    exit 1;
+	}
+	$app->{keymap} and respond $game->keymap;
     }
-    $app->{keymap} and respond $game->keymap;
+    prompt();
 }
 
 1;

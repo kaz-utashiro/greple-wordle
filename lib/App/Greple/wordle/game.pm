@@ -8,9 +8,9 @@ use List::MoreUtils qw(pairwise);
 use Getopt::EX::Colormap qw(colorize);
 
 use Mo qw(is required default); {
-    has answer   => ( is => 'ro', required => 1 );
-    has attempts => ( default => [] );
-    has map   => ( default => {} );
+    has answer   => is => 'ro', required => 1 ;
+    has attempts => [], lazy => 0 ;
+    has map      => {} ;
 }
 no Mo;
 
@@ -48,10 +48,11 @@ sub update {
 # keymap
 ######################################################################
 
-my %cmap = (
+my %map_color = (
     G => '555/#6aaa64',
     Y => '555/#c9b458',
     K => '#787c7e/#787c7e',
+    K => 'L17/#787c7e',
     _ => '555/#787c7e',
     );
 
@@ -62,7 +63,7 @@ sub keycolor {
 
 sub keymap {
     my $obj = shift;
-    my $keys = keycolor $obj->map, \%cmap, join('', 'a'..'z');
+    my $keys = keycolor $obj->map, \%map_color, join('', 'a'..'z');
     $keys;
 }
 
@@ -98,16 +99,16 @@ sub _result {
 # hint
 ######################################################################
 
-my %hint_cmap = (
-    G => '555/#6aaa64',
-    Y => '555/#c9b458',
-    K => 'L22/#787c7e',
-    _ => '555/#787c7e',
+my %hint_color = (
+    G => 'G',
+    Y => 'Y',
+    K => 'KU',
+    _ => 'K',
     );
 
 sub hint_color {
     my $obj = shift;
-    map keycolor($obj->map, \%hint_cmap, $_), @_;
+    map keycolor($obj->map, \%hint_color, $_), @_;
 }
 
 sub hint {

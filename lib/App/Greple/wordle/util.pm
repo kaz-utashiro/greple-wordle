@@ -10,7 +10,7 @@ our @EXPORT_OK = qw(uniqword);
 
 sub uniqword {
     state @re;
-    my $len = length $_[0];
+    my $len = length $_[0] or die;
     my $re = $re[$len] //=
 	join('', '^(.)',
 	     map {
