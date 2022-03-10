@@ -77,6 +77,10 @@ as a command.
     Any other string include non-alphabetical character is taken as a
     regular expression to filter words.
 
+- **!!**
+
+    Get word list produced by the last command execution.
+
 These commands can be connected in series.  For example, next command
 show possible words start with letter `z`.
 
