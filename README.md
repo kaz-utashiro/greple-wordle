@@ -87,6 +87,21 @@ Next shows all words which does not incude any letter of `audio` and
 
     !audio !rents u
 
+# EXAMPLE
+
+    1: solid                    # try word "solid"
+    2: panic                    # try word "panic"
+    3: hint                     # show hint
+    3: !solid !panic =eft uniq  # search word exclude(solidpanic) include(eft)
+    3: wheft                    # try word "wheft"
+    4: hint                     # show hint
+    4: datum                    # try word "datum"
+    5: tardy                    # try word "tardy"
+
+<div>
+    <p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/greple-wordle/main/images/hint-1.png">
+</div>
+
 # BUGS
 
 Wrong position character is colored yellow always, even if it is
