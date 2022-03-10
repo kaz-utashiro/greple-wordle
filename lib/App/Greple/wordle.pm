@@ -94,7 +94,7 @@ my $game;
 my $interactive;
 
 sub prompt {
-    printf '%d: ', $game->attempt + 1;
+    sprintf '%d: ', $game->attempt + 1;
 }
 
 sub initialize {
@@ -106,7 +106,7 @@ sub initialize {
 	push @$argv, '--interactive', ('/dev/stdin') x $app->{total};
 	select->autoflush;
 	say $app->title;
-	prompt();
+	print prompt();
     }
 }
 
@@ -114,7 +114,8 @@ sub respond {
     local $_ = $_;
     my $chomped = chomp;
     print ansi_code("{CHA}{CUU}") if $chomped;
-    print ansi_code(sprintf("{CHA(%d)}", max(8, vwidth($_) + 2)));
+    print ansi_code(sprintf("{CHA(%d)}",
+			    max(11, vwidth($_) + length(prompt()) + 2)));
     print s/(?<=.)\z/\n/r for @_;
 }
 
@@ -192,7 +193,7 @@ sub inspect {
 	}
 	$app->{keymap} and respond $game->keymap;
     }
-    prompt();
+    print prompt();
 }
 
 1;
