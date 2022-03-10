@@ -6,6 +6,7 @@ requires 'Getopt::EX::Hashed', '1.03';
 requires 'List::Util';
 requires 'List::MoreUtils';
 requires 'Date::Calc';
+requires 'Try::Tiny';
 requires 'Text::VisualWidth::PP', '0.05';
 requires 'Mo';
 
