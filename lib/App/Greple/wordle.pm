@@ -141,15 +141,18 @@ sub command {
     my $word = shift;
     my @cmd = split ' ', $word or return;
     my @word = @word_all;
+    state @remember;
     $cmd[0] =~ /^u(niq)?$/ and unshift @cmd, 'hint';
 
     for (@cmd) {
 	try {
 	    if    ($_ eq '|')   {}
+	    elsif (/^d$/)       { $app->{debug} ^= 1 }
+	    elsif (/^!!$/)      { @word = @remember }
 	    elsif (/^h(int)?$/) { @word = choose($game->hint, @word) }
 	    elsif (/^u(niq)?$/) { @word = uniqword(@word) }
-	    elsif (m{^=(.+)})   { @word = choose(includes($1), @word) }
-	    elsif (m{^!(.+)})   { @word = choose("^(?!.*[$1])", @word) }
+	    elsif (/^=(.+)/)    { @word = choose(includes($1), @word) }
+	    elsif (/^!(.+)/)    { @word = choose("^(?!.*[$1])", @word) }
 	    elsif (/\W/)        { @word = choose($_, @word); }
 	    else  { return }
 	    1;
@@ -159,10 +162,10 @@ sub command {
 	warn "No match\n";
 	return 1;
     }
-    my @match = $game->hint_color(@word);
+    @remember = @word;
     do {
 	local $, = ' ';
-	say @match;
+	say $game->hint_color(@word);
     };
     1;
 }
