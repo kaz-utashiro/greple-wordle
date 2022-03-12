@@ -5,6 +5,7 @@
 /blib
 /Makefile
 /pm_to_blib
+.DS_store
 
 /carton.lock
 /.carton/
