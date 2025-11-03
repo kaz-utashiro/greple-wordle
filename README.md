@@ -1,4 +1,4 @@
-[![Actions Status](https://github.com/kaz-utashiro/greple-wordle/workflows/test/badge.svg)](https://github.com/kaz-utashiro/greple-wordle/actions) [![MetaCPAN Release](https://badge.fury.io/pl/App-Greple-wordle.svg)](https://metacpan.org/release/App-Greple-wordle)
+[![Actions Status](https://github.com/kaz-utashiro/greple-wordle/actions/workflows/test.yml/badge.svg?branch=main)](https://github.com/kaz-utashiro/greple-wordle/actions?workflow=test) [![MetaCPAN Release](https://badge.fury.io/pl/App-Greple-wordle.svg)](https://metacpan.org/release/App-Greple-wordle)
 # NAME
 
 App::Greple::wordle - wordle module for greple
