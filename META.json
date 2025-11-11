@@ -43,6 +43,7 @@
       "runtime" : {
          "requires" : {
             "App::Greple" : "8.58",
+            "Data::Section::Simple" : "0",
             "Date::Calc" : "0",
             "Getopt::EX" : "v2.1.6",
             "Getopt::EX::Hashed" : "1.05",

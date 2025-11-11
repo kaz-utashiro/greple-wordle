@@ -8,6 +8,7 @@ requires 'List::MoreUtils';
 requires 'Date::Calc';
 requires 'Try::Tiny';
 requires 'Text::VisualWidth::PP', '0.05';
+requires 'Data::Section::Simple';
 requires 'Mo';
 
 on 'test' => sub {
