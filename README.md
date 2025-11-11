@@ -129,6 +129,8 @@ colored green in other position.
 
 [https://github.com/alex1770/wordle](https://github.com/alex1770/wordle)
 
+[https://wordfinder.yourdictionary.com/wordle/answers/](https://wordfinder.yourdictionary.com/wordle/answers/)
+
 # AUTHOR
 
 Kazumasa Utashiro
