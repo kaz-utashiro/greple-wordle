@@ -3,7 +3,7 @@ use v5.14;
 use warnings;
 use utf8;
 
-our $VERSION = "0.12";
+our $VERSION = "0.13";
 
 use Data::Dumper;
 use List::Util qw(shuffle max);
