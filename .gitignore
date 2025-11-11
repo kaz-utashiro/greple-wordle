@@ -11,6 +11,8 @@
 /.carton/
 /local/
 
+/.claude/
+
 nytprof.out
 nytprof/
 
