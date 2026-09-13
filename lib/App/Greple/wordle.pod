@@ -82,7 +82,7 @@ Show result when successful.  Default is true.
 
 Generate a random index every time.
 
-=item B<--trial>=#, B<-x>=#
+=item B<--trial>=#, B<-x>#
 
 Set the trial count.  Default is 6.
 
@@ -158,7 +158,7 @@ C<rents>, and are made of unique characters.
 
     greple -Mwordle --data=NYT            # Use NYT Wordle word list
     greple -Mwordle --data=ORIGINAL       # Use original word list (default)
-    greple -Mwordle --data=NYT -n0        # First word in NYT dataset (cigar)
+    greple -Mwordle --data=NYT -s0n0      # First word in NYT dataset (cigar)
 
 =begin html
 

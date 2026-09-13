@@ -72,7 +72,7 @@ Use the **--compat** option to get answers compatible with the original game.
 
     Generate a random index every time.
 
-- **--trial**=#, **-x**=#
+- **--trial**=#, **-x**#
 
     Set the trial count.  Default is 6.
 
@@ -134,7 +134,7 @@ The next example shows all words that do not include any letter of `audio` and
 
     greple -Mwordle --data=NYT            # Use NYT Wordle word list
     greple -Mwordle --data=ORIGINAL       # Use original word list (default)
-    greple -Mwordle --data=NYT -n0        # First word in NYT dataset (cigar)
+    greple -Mwordle --data=NYT -s0n0      # First word in NYT dataset (cigar)
 
 <div>
     <p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/greple-wordle/main/images/hint-1.png">
