@@ -102,8 +102,8 @@ sub _result {
 my %hint_color = (
     G => 'G',
     Y => 'Y',
-    K => 'KU',
-    _ => 'K',
+    K => 'U',
+    _ => '',
     );
 
 sub hint_color {
