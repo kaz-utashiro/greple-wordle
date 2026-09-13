@@ -11,7 +11,7 @@ our @HIDDEN = $data->{HIDDEN} =~ /\w+/g;
 
 1;
 
-## data from NewYork Times until November 09, 2025
+## data from New York Times until November 09, 2025
 
 __DATA__
 
