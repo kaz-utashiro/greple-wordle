@@ -28,8 +28,8 @@ minil test                     # Run full test suite (mirrors CI)
 
 ### Running Locally
 ```bash
-greple -Ilib -Mwordle         # Run the game using local code
-greple -Ilib -Mwordle --series=0 --index=0  # Test with specific answer
+perl -Ilib -S greple -Mwordle  # Run the game using local code
+perl -Ilib -S greple -Mwordle --series=0 --index=0  # Test with specific answer
 ```
 
 ### Release Process

@@ -1,7 +1,7 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- Core Perl modules live under `lib/App/Greple/wordle*.pm`; `wordle.pm` provides the CLI entry point, `game.pm` manages state, and `word_hidden.pm` / `word_all.pm` supply word lists.
+- Core Perl modules live under `lib/App/Greple/wordle*.pm`; `wordle.pm` provides the CLI entry point, `game.pm` manages state, and `ORIGINAL.pm` / `NYT.pm` supply word datasets (`word_hidden.pm` / `word_all.pm` are legacy).
 - Tests reside in `t/`, numbered `NN_description.t`; the current `00_compile.t` sanity-checks module loading.
 - Assets and long-form docs sit in `images/` and `README.md`; distribution metadata is maintained in `Build.PL`, `cpanfile`, and `minil.toml`.
 
@@ -10,7 +10,7 @@
 - `perl Build.PL && ./Build` builds the distribution with Module::Build::Tiny.
 - `./Build test` or `prove -l t` executes the full test suite.
 - `minil test` mirrors the GitHub Actions workflow; run it before tagging or releasing.
-- `greple -Ilib -Mwordle` launches the module against the in-tree code for manual playtesting.
+- `perl -Ilib -S greple -Mwordle` launches the module against the in-tree code for manual playtesting.
 
 ## Coding Style & Naming Conventions
 - Target Perl `v5.18.2` or newer; add `use v5.18.2; use warnings; use utf8;` to new modules.
@@ -30,5 +30,5 @@
 - Confirm GitHub Actions (`.github/workflows/test.yml`) succeeds on your branch and rebase to resolve conflicts before requesting review.
 
 ## Release & Automation Notes
-- CI currently exercises Perl 5.18–5.36; spot-check locally on at least one target version prior to release.
+- CI currently exercises Perl 5.18–5.40; spot-check locally on at least one target version prior to release.
 - Update `Changes` and bump `$VERSION` in `lib/App/Greple/wordle.pm` when preparing a release, then run `minil release` after all checks pass.
