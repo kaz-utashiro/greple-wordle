@@ -141,8 +141,9 @@ sub _hint {
 	$a ? $a : "[^$b]";
     } @yes, @no;
     my $in = join '', map { "(?=.*$_)" } uniq $seen =~ /(?<!-)\w/g;
-    my $ex = sprintf '(?!.*[%s])', join('', uniq $seen =~ /(?<=-)\w/g);
-    $in . $ex . $match;
+    my $ex = join '', uniq $seen =~ /(?<=-)\w/g;
+    $ex = "(?!.*[$ex])" if $ex ne '';
+    '^' . $in . $ex . $match;
 }
 
 1;
