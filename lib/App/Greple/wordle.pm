@@ -161,18 +161,20 @@ sub command {
     my @cmd = split ' ', $word or return;
     my @word = @word_all;
     state @remember;
+    my $done;
     $cmd[0] =~ /^u(niq)?$/ and unshift @cmd, 'hint';
 
     while (@cmd) {
 	local $_ = shift @cmd;
+	# "return" in try block only leaves the block, so use $done
 	try {
 	    if    ($_ eq '|')   {}
 	    elsif (/^d$/)       {
 		$app->debug ^= 1;
-		printf 'Debug %s', $app->debug ? 'on' : 'off';
-		return;
+		printf "Debug %s\n", $app->debug ? 'on' : 'off';
+		return $done = 1;
 	    }
-	    elsif (/^\?$/)      { help(); return }
+	    elsif (/^\?$/)      { help(); return $done = 1 }
 	    elsif (/^!!$/)      { @word = @remember }
 	    elsif (/^h(int)?$/) { @word = choose($game->hint, @word) }
 	    elsif (/^u(niq)?$/) { @word = grep { !/(.).*\1/i } @word }
@@ -185,6 +187,7 @@ sub command {
 	    warn "ERROR: $_" if $app->debug;
 	    return /^[a-z]+$/i ? 0 : 1;
 	};
+	return 1 if $done;
     }
     if (@word == 0) {
 	warn "No match\n";
