@@ -385,6 +385,8 @@ sub check {
 	# show previous attempts above the line greple prints
 	say for $app->history ? $game->guess_color(@{$game->attempts}) : ();
 	$game->try($word);
+	# greple matches case-insensitively, so show the word in upper case
+	$_ = uc $_;
     }
 }
 

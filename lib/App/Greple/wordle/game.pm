@@ -57,7 +57,7 @@ my %map_color = (
 
 sub keycolor {
     my($kmap, $cmap, $s) = @_;
-    join '', map colorize($cmap->{$kmap->{$_}//'_'}, $_), $s =~ /./g;
+    join '', map colorize($cmap->{$kmap->{$_}//'_'}, uc $_), $s =~ /./g;
 }
 
 sub keymap {
@@ -106,7 +106,7 @@ sub guess_color {
     map {
 	my @c = shift(@result) =~ /./g;
 	my @w = /./g;
-	join '', pairwise { colorize($guess_color{$a}, $b) } @c, @w;
+	join '', pairwise { colorize($guess_color{$a}, uc $b) } @c, @w;
     } @_;
 }
 

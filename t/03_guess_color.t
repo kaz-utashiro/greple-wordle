@@ -17,7 +17,7 @@ sub expect {
     my($word, $result) = @_;
     my @c = $result =~ /./g;
     my $i = 0;
-    join '', map { colorize($color{$c[$i++]}, $_) } $word =~ /./g;
+    join '', map { colorize($color{$c[$i++]}, uc $_) } $word =~ /./g;
 }
 
 my $game = App::Greple::wordle::game->new(answer => 'cigar');
@@ -37,5 +37,12 @@ is_deeply [ $game->guess_color('rebus', 'cigar') ],
 
 is_deeply [ $game->guess_color('REBUS') ], [ expect('REBUS', 'YKKKK') ],
     'upper case word';
+
+# keymap and word list are shown in upper case
+sub plain { (my $s = shift) =~ s/\e\[[\d;]*[mK]//g; $s }
+$game->try('rebus');
+is plain($game->keymap), join('', 'A' .. 'Z'), 'keymap is upper case';
+is_deeply [ map { plain($_) } $game->hint_color('cigar', 'rebus') ],
+    [ 'CIGAR', 'REBUS' ], 'hint words are upper case';
 
 done_testing;
