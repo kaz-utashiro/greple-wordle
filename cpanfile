@@ -1,4 +1,4 @@
-requires 'perl', 'v5.18.2';
+requires 'perl', 'v5.24.0';
 
 requires 'App::Greple', '8.58';
 requires 'Getopt::EX', '2.1.6';

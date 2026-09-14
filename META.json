@@ -57,7 +57,7 @@
             "Mo" : "0",
             "Text::VisualWidth::PP" : "0.05",
             "Try::Tiny" : "0",
-            "perl" : "v5.18.2"
+            "perl" : "v5.24.0"
          }
       },
       "test" : {

@@ -13,7 +13,7 @@
 - `perl -Ilib -S greple -Mwordle` launches the module against the in-tree code for manual playtesting.
 
 ## Coding Style & Naming Conventions
-- Target Perl `v5.18.2` or newer; add `use v5.18.2; use warnings; use utf8;` to new modules.
+- Target Perl `v5.24` or newer; add `use v5.24; use warnings; use utf8;` to new modules.
 - Prefer 4-space indentation and match the surrounding alignment; keep lines under 100 columns and avoid trailing whitespace.
 - Follow the existing namespace pattern `App::Greple::wordle::*`, with filenames mirroring package names beneath `lib/`.
 - Reuse helpers from `List::Util`, `List::MoreUtils`, and other declared dependencies instead of duplicating functionality.
@@ -30,5 +30,5 @@
 - Confirm GitHub Actions (`.github/workflows/test.yml`) succeeds on your branch and rebase to resolve conflicts before requesting review.
 
 ## Release & Automation Notes
-- CI currently exercises Perl 5.18–5.40; spot-check locally on at least one target version prior to release.
+- CI currently exercises Perl 5.24–5.44; spot-check locally on at least one target version prior to release.
 - Update `Changes` and bump `$VERSION` in `lib/App/Greple/wordle.pm` when preparing a release, then run `minil release` after all checks pass.

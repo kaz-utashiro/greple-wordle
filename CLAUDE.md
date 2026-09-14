@@ -122,7 +122,7 @@ Commands can be chained with spaces:
 
 ## Technical Requirements
 
-- **Perl version**: v5.18.2 minimum (declared in cpanfile)
+- **Perl version**: v5.24.0 minimum (declared in cpanfile; required by App::Greple 10.00+)
 - **Build system**: Module::Build::Tiny (via minil)
 - **Key dependencies**:
   - App::Greple 8.58+
@@ -134,7 +134,7 @@ Commands can be chained with spaces:
 
 ## Testing Notes
 
-- CI tests against Perl 5.18, 5.28, 5.30, 5.36, 5.38, 5.40
+- CI tests against Perl 5.24, 5.28, 5.30, 5.36, 5.38, 5.40, 5.42, 5.44
 - Test file naming: `NN_description.t` pattern in `t/` directory
 - Currently only has compilation test (`00_compile.t`)
 - Use `use lib 'lib';` in new tests to access in-tree modules
