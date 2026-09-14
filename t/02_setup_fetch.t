@@ -35,9 +35,12 @@ is $answer, 'zesty', 'series 0 out of range uses fetched answer';
 is_deeply $fetched, [ 5000 ], 'fetched with the index';
 is $warn, '', 'no warning when fetched';
 
+my @hidden = @App::Greple::wordle::NYT::HIDDEN;
+my $wrap = 5000 % @hidden;
+
 ($answer, $fetched, $warn) = answer_for(undef, '--series=0', '--index=5000');
-like $warn, qr/no data for 5000/, 'fetch failure warns';
-like $answer, qr/^[a-z]{5}$/, 'fetch failure picks a random answer';
+like $warn, qr/no data for 5000, so use answer #$wrap instead/, 'fetch failure warns';
+is $answer, $hidden[$wrap], 'fetch failure uses index modulo answer count';
 
 ($answer, $fetched, $warn) = answer_for('zesty', '--series=0', '--index=0');
 is $answer, 'cigar', 'local data is used when available';
@@ -45,6 +48,10 @@ is_deeply $fetched, [], 'no fetch when local data is available';
 
 ($answer, $fetched, $warn) = answer_for('zesty', '--series=1', '--index=5000');
 is_deeply $fetched, [], 'no fetch for series other than 0';
-like $warn, qr/no data for 5000/, 'series 1 out of range warns as before';
+is $warn, '', 'series 1 out of range does not warn';
+my($wrapped) = answer_for(undef, '--series=1', "--index=$wrap");
+is $answer, $wrapped, 'series 1 out of range uses index modulo answer count';
+my($next) = answer_for(undef, '--series=1', '--index=5001');
+isnt $next, $answer, 'series 1 answer changes with the index';
 
 done_testing;

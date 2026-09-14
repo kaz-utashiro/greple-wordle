@@ -50,8 +50,8 @@ Wordle.  It may contain different words than the original.
 
 When option B<--compat> is given and the answer for the index is not
 included in the dataset, it is fetched from the New York Times web
-site.  If it cannot be fetched, a random answer is selected as
-described in B<--index>.  Fetching requires L<IO::Socket::SSL>.
+site.  If it cannot be fetched, an answer is selected as described
+in B<--index>.  Fetching requires L<IO::Socket::SSL>.
 
 =back
 
@@ -73,8 +73,10 @@ Specify the answer index. The default index is calculated from days since
 2021/06/19.  If the value is negative, you can get yesterday's
 question by specifying -1.
 
-If the specified index exceeds the available answer list, a random
-answer will be selected from the dataset with a warning message.
+If the specified index exceeds the available answer list, the answer
+at the index modulo the number of answers is used.  A warning message
+is shown for series zero, because the answer differs from the
+original game.
 
 Answer for option B<-s0n0> with C<ORIGINAL> dataset is C<cigar>.
 

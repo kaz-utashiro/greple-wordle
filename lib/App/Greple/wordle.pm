@@ -82,12 +82,13 @@ sub setup {
 	    $app->answer = $answer;
 	    return;
 	}
-	if ($app->index > $#word_hidden) {
-	    warn sprintf "no data for %d, so pick a random answer from past data\n", $app->index;
-	    srand($app->series);
-	    $app->index = int rand @word_hidden;
+	my $index = $app->index;
+	if ($index > $#word_hidden) {
+	    $index %= @word_hidden;
+	    warn sprintf "no data for %d, so use answer #%d instead\n",
+		$app->index, $index if $app->series == 0;
 	}
-	$app->answer = $word_hidden[ $app->index ];
+	$app->answer = $word_hidden[ $index ];
     }
 }
 

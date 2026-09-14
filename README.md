@@ -43,8 +43,8 @@ Use the **--compat** option to get answers compatible with the original game.
 
         When option **--compat** is given and the answer for the index is not
         included in the dataset, it is fetched from the New York Times web
-        site.  If it cannot be fetched, a random answer is selected as
-        described in **--index**.  Fetching requires [IO::Socket::SSL](https://metacpan.org/pod/IO%3A%3ASocket%3A%3ASSL).
+        site.  If it cannot be fetched, an answer is selected as described
+        in **--index**.  Fetching requires [IO::Socket::SSL](https://metacpan.org/pod/IO%3A%3ASocket%3A%3ASSL).
 
     Dataset modules are dynamically loaded from `App::Greple::wordle::`
     namespace with uppercase dataset name.
@@ -63,8 +63,10 @@ Use the **--compat** option to get answers compatible with the original game.
     2021/06/19.  If the value is negative, you can get yesterday's
     question by specifying -1.
 
-    If the specified index exceeds the available answer list, a random
-    answer will be selected from the dataset with a warning message.
+    If the specified index exceeds the available answer list, the answer
+    at the index modulo the number of answers is used.  A warning message
+    is shown for series zero, because the answer differs from the
+    original game.
 
     Answer for option **-s0n0** with `ORIGINAL` dataset is `cigar`.
 
