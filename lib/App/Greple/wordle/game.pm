@@ -2,7 +2,6 @@ package App::Greple::wordle::game;
 use v5.14;
 use warnings;
 
-use Data::Dumper;
 use List::Util qw(any uniq);
 use List::MoreUtils qw(pairwise);
 use Getopt::EX::Colormap qw(colorize);

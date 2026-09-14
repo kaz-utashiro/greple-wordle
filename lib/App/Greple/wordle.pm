@@ -5,13 +5,11 @@ use utf8;
 
 our $VERSION = "0.13";
 
-use Data::Dumper;
 use List::Util qw(shuffle max);
 use Try::Tiny;
 use Getopt::EX::Colormap qw(colorize ansi_code);
 use Text::VisualWidth::PP 0.05 'vwidth';
 use App::Greple::wordle::game;
-use App::Greple::wordle::util qw();
 
 use Getopt::EX::Hashed; {
     Getopt::EX::Hashed->configure( DEFAULT => [ is => 'rw' ] );
@@ -34,6 +32,7 @@ no Getopt::EX::Hashed;
 sub parseopt {
     my $app = shift;
     my $argv = shift;
+    # GetOptionsFromArray is called in this package by Getopt::EX::Hashed
     use Getopt::Long qw(GetOptionsFromArray Configure);
     Configure qw(bundling no_getopt_compat pass_through);
     $app->getopt($argv) || die "Option parse error.\n";
@@ -42,7 +41,7 @@ sub parseopt {
 
 sub _days {
     use Date::Calc qw(Delta_Days);
-    my($mday, $mon, $year, $yday) = (localtime(time))[3,4,5,7];
+    my($mday, $mon, $year) = (localtime(time))[3,4,5];
     Delta_Days(2021, 6, 19, $year + 1900, $mon + 1, $mday);
 }
 
@@ -118,7 +117,6 @@ sub title {
 
 my $app = __PACKAGE__->new or die;
 my $game;
-my $interactive;
 
 sub prompt {
     sprintf '%d: ', $game->attempt + 1;
@@ -129,7 +127,7 @@ sub initialize {
     $app->parseopt($argv)->setup;
     $game = App::Greple::wordle::game->new(answer => $app->answer);
     push @$argv, $app->patterns;
-    if ($interactive = -t STDIN) {
+    if (-t STDIN) {
 	push @$argv, '--interactive', ('/dev/stdin') x $app->total;
 	select->autoflush;
 	say $app->title;

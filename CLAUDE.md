@@ -59,9 +59,6 @@ The codebase follows a clear separation of concerns:
   - Produces colored output (keymap, hints, result squares)
   - Uses Mo for minimal object system
 
-- **lib/App/Greple/wordle/util.pm**: Shared utilities
-  - Currently contains `uniqword()` for filtering unique-character words
-
 - **lib/App/Greple/wordle/ORIGINAL.pm**: Original Wordle dataset
   - Exports `@WORDS` (all valid words) and `@HIDDEN` (answer list)
   - Contains classic Wordle word list from original game
