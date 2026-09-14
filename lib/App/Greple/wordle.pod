@@ -46,8 +46,12 @@ default dataset and contains the classic Wordle word list.
 =item C<NYT>
 
 The New York Times Wordle word list, which includes words used by NYT
-Wordle. This dataset is updated and may contain different words than
-the original.
+Wordle.  It may contain different words than the original.
+
+When option B<--compat> is given and the answer for the index is not
+included in the dataset, it is fetched from the New York Times web
+site.  If it cannot be fetched, a random answer is selected as
+described in B<--index>.  Fetching requires L<IO::Socket::SSL>.
 
 =back
 

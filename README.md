@@ -39,8 +39,12 @@ Use the **--compat** option to get answers compatible with the original game.
     - `NYT`
 
         The New York Times Wordle word list, which includes words used by NYT
-        Wordle. This dataset is updated and may contain different words than
-        the original.
+        Wordle.  It may contain different words than the original.
+
+        When option **--compat** is given and the answer for the index is not
+        included in the dataset, it is fetched from the New York Times web
+        site.  If it cannot be fetched, a random answer is selected as
+        described in **--index**.  Fetching requires [IO::Socket::SSL](https://metacpan.org/pod/IO%3A%3ASocket%3A%3ASSL).
 
     Dataset modules are dynamically loaded from `App::Greple::wordle::`
     namespace with uppercase dataset name.
