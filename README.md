@@ -24,7 +24,7 @@ Rules are almost the same as the original game, but answers are different.
 Use the **--compat** option to get answers compatible with the original game.
 
 <div>
-    <p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/greple-wordle/main/images/screen-5.png">
+    <p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/greple-wordle/main/images/screen-6.png">
 </div>
 
 # OPTIONS

@@ -26,7 +26,7 @@ Use the B<--compat> option to get answers compatible with the original game.
 
 =begin html
 
-<p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/greple-wordle/main/images/screen-5.png">
+<p><img width="750" src="https://raw.githubusercontent.com/kaz-utashiro/greple-wordle/main/images/screen-6.png">
 
 =end html
 
