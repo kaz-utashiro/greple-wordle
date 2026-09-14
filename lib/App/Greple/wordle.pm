@@ -78,6 +78,12 @@ Specify the answer index. The default index is calculated from days since
 2021/06/19.  If the value is negative, you can get yesterday's
 question by specifying -1.
 
+=begin comment
+
+Environment variable C<WORDLE_INDEX> is used as the default.
+
+=end comment
+
 If the specified index exceeds the available answer list, the answer
 at the index modulo the number of answers is used.  A warning message
 is shown for series zero, because the answer differs from the
@@ -106,7 +112,33 @@ Set the trial count.  Default is 6.
 
 =item B<--answer>=I<word>
 
-Set answer word.  For debug purpose.
+Set answer word.  For debug purpose.  Environment variable
+C<WORDLE_ANSWER> is used as the default.
+
+=item B<--total>=#
+
+Set the maximum number of inputs, including commands and words not in
+the word list.  Default is 30.
+
+=item B<-->[B<no->]B<keymap>
+
+Show the keymap next to the latest attempt.  Default is true.
+
+=item B<--correct>=I<string>
+
+Set the string shown when the answer is correct.  It is repeated by
+the number of remaining attempts plus one.  Default is U+1F389 (PARTY
+POPPER).
+
+=item B<--wrong>=I<string>
+
+Set the string shown for a word not in the word list or an unknown
+command.  Default is U+1F4A5 (COLLISION SYMBOL).
+
+=item B<-->[B<no->]B<debug>
+
+Show regular expressions used by commands and command errors.  It can
+be toggled by command B<d>.
 
 =end comment
 
@@ -144,6 +176,18 @@ regular expression to filter words.
 =item B<!!>
 
 Recall the word list produced by the last command execution.
+
+=begin comment
+
+=item B<?>
+
+Show help message.
+
+=item B<d>
+
+Toggle debug mode.  See option B<--debug>.
+
+=end comment
 
 =back
 
