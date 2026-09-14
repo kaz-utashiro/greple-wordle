@@ -13,6 +13,8 @@ sub answer_for {
     my @opt = @_;
     my $pid = open(my $from_child, '-|') // die "fork: $!";
     if ($pid == 0) {
+	# stay non-interactive even when the test is run from a terminal
+	open STDIN, '<', '/dev/null' or die "/dev/null: $!";
 	my @argv = @opt;
 	App::Greple::wordle::initialize('wordle', \@argv);
 	my($answer) = map { /^\[([a-z]+)\]$/ ? $1 : () } @argv;

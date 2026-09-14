@@ -12,6 +12,8 @@ sub answer_for {
     my($result, @opt) = @_;
     my $pid = open(my $from_child, '-|') // die "fork: $!";
     if ($pid == 0) {
+	# stay non-interactive even when the test is run from a terminal
+	open STDIN, '<', '/dev/null' or die "/dev/null: $!";
 	my(@fetched, @warn);
 	no warnings qw(redefine once);
 	*App::Greple::wordle::NYT::fetch_answer = sub { push @fetched, shift; $result };
