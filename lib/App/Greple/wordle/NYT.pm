@@ -36,7 +36,7 @@ sub fetch_answer {
 
 1;
 
-## data from New York Times until November 09, 2025
+## data from New York Times until September 13, 2026
 
 __DATA__
 
@@ -1309,4 +1309,28 @@ noisy along lefty teeth knife later defer coven quill mouth blunt drape dally
 fritz gooey civil geese spoil width spasm relay plane amuse nylon annoy hardy 
 lever stack wound beard forum spoof catty gross haven ideal limbo detox stunt 
 drill tuber gauge plump fetid holly glare lathe abhor motel rabid awoke venue 
-short guise peril arise fugue 
+short guise peril arise fugue tabby gizmo deuce tinge lurid clung wield clamp 
+opine maker grave vowel thick bunny dough plead hovel remit colic gruff muggy 
+leach cacti haste tulip among waist flute gravy snide erase guess truck miser 
+swing dodgy segue grass rugby myrrh white quilt conch glint spool prism speed 
+batch abbot fruit decor siren fable proof sitar posse filly oomph pecan blast 
+eight manic quark trial gumbo avoid chasm racer fiery sumac waxen sully cubic 
+clink baron cliff strut freak dusky cruel flaky jumbo allot spiny cigar weigh 
+chide swoop gavel bleat embed cello scene vegan surge mooch bloom skull roost 
+squad mogul hoist stank awake guava attic buyer shred lance dizzy hydra fluke 
+slime linen theft sheep gunky vogue lobby hasty shoal teddy smell eaten ankle 
+grade drama clasp amply rehab oasis slick basil serif brood wiser befit ivory 
+afoot chump comet swamp fizzy sober singe sandy envoy sworn dense inlet laden 
+carom prude alley elfin cycle begun cubit belle toady stand weave clump snore 
+tweet drunk women gloss eerie quack rural crock plume bring puffy riser latch 
+liken budge umbra satin parka newly clock dowdy waver creed mover bylaw loath 
+dusty wreck agree vocal chuck niece visit couch stuff divot clang smile etude 
+chili basis notch alloy nobly morph thumb mafia wharf align testy break quell 
+sepia broil amaze token entry emoji drake alibi ovate curry queer unity acute 
+scoop emcee crude puppy demur maven baton pizza swami toddy sling demon amend 
+canal avian clack stout steak pshaw butte legal booth churn diver shill lorry 
+orbit putty aloha grape poser sonar valve flume purse slush penal reply motif 
+posit gripe feign privy clunk snipe fence wimpy crash geode loose aspic tribe 
+strip grill murky trace prawn olden runny click capon uncut tween blood intel 
+mound remix ruler joist wager soupy beige blind liven burst dryly aster nifty 
+focus 
