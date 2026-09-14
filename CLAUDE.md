@@ -70,14 +70,6 @@ The codebase follows a clear separation of concerns:
     later answers are fetched at runtime by `fetch_answer`)
   - Uses Data::Section::Simple for data storage
 
-- **lib/App/Greple/wordle/word_all.pm**: Legacy word dictionary (deprecated)
-  - Kept for backward compatibility
-  - Exports `@word_all` array and `%word_all` hash
-
-- **lib/App/Greple/wordle/word_hidden.pm**: Legacy answer list (deprecated)
-  - Kept for backward compatibility
-  - Shuffled using series number as seed
-
 ### Integration with greple
 
 The module leverages greple's pattern matching engine:

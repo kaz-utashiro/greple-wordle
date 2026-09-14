@@ -1,7 +1,7 @@
 # Repository Guidelines
 
 ## Project Structure & Module Organization
-- Core Perl modules live under `lib/App/Greple/wordle*.pm`; `wordle.pm` provides the CLI entry point, `game.pm` manages state, and `ORIGINAL.pm` / `NYT.pm` supply word datasets (`word_hidden.pm` / `word_all.pm` are legacy).
+- Core Perl modules live under `lib/App/Greple/wordle*.pm`; `wordle.pm` provides the CLI entry point, `game.pm` manages state, and `ORIGINAL.pm` / `NYT.pm` supply word datasets.
 - Tests reside in `t/`, numbered `NN_description.t`; the current `00_compile.t` sanity-checks module loading.
 - Assets and long-form docs sit in `images/` and `README.md`; distribution metadata is maintained in `Build.PL`, `cpanfile`, and `minil.toml`.
 
