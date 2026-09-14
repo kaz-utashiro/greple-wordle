@@ -10,7 +10,7 @@ greple -Mwordle
 
 =head1 VERSION
 
-Version 0.13
+Version 1.00
 
 =head1 DESCRIPTION
 
@@ -269,7 +269,7 @@ use v5.14;
 use warnings;
 use utf8;
 
-our $VERSION = "0.13";
+our $VERSION = "1.00";
 
 use List::Util qw(shuffle max);
 use Try::Tiny;

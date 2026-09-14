@@ -9,7 +9,7 @@ greple -Mwordle
 
 # VERSION
 
-Version 0.13
+Version 1.00
 
 # DESCRIPTION
 
