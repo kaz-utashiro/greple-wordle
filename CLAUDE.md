@@ -82,7 +82,7 @@ The module leverages greple's pattern matching engine:
 
 Uses Getopt::EX::Hashed for declarative option definitions:
 - Options defined with `has` macro including specs, defaults, actions
-- `--data` option selects dataset (default: ORIGINAL)
+- `--data` option selects dataset (default: NYT)
 - Custom action for `--compat` that sets series to 0
 - Supports environment variables (`WORDLE_ANSWER`, `WORDLE_INDEX`)
 - Negative index values are relative to current day

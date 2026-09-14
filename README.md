@@ -27,19 +27,20 @@ Use the **--compat** option to get answers compatible with the original game.
 
 - **--data**=_dataset_
 
-    Choose the word dataset.  Default is `ORIGINAL`.
+    Choose the word dataset.  Default is `NYT`.
 
     Available datasets:
 
     - `ORIGINAL`
 
-        The original word list from the initial Wordle game. This is the
-        default dataset and contains the classic Wordle word list.
+        The original word list from the initial Wordle game.  It contains the
+        classic Wordle word list.
 
     - `NYT`
 
         The New York Times Wordle word list, which includes words used by NYT
-        Wordle.  It may contain different words than the original.
+        Wordle.  It may contain different words than the original.  This is
+        the default dataset.
 
         When option **--compat** is given and the answer for the index is not
         included in the dataset, it is fetched from the New York Times web
@@ -68,7 +69,7 @@ Use the **--compat** option to get answers compatible with the original game.
     is shown for series zero, because the answer differs from the
     original game.
 
-    Answer for option **-s0n0** with `ORIGINAL` dataset is `cigar`.
+    Answer for option **-s0n0** is `cigar`.
 
 - **--**\[**no-**\]**result**
 
@@ -143,8 +144,8 @@ The next example shows all words that do not include any letter of `audio` and
 
 ## Using different datasets
 
-    greple -Mwordle --data=NYT            # Use NYT Wordle word list
-    greple -Mwordle --data=ORIGINAL       # Use original word list (default)
+    greple -Mwordle --data=NYT            # Use NYT Wordle word list (default)
+    greple -Mwordle --data=ORIGINAL       # Use original word list
     greple -Mwordle --data=NYT -s0n0      # First word in NYT dataset (cigar)
 
 <div>

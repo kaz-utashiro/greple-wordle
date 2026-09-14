@@ -32,7 +32,7 @@ Use the B<--compat> option to get answers compatible with the original game.
 
 =item B<--data>=I<dataset>
 
-Choose the word dataset.  Default is C<ORIGINAL>.
+Choose the word dataset.  Default is C<NYT>.
 
 Available datasets:
 
@@ -40,13 +40,14 @@ Available datasets:
 
 =item C<ORIGINAL>
 
-The original word list from the initial Wordle game. This is the
-default dataset and contains the classic Wordle word list.
+The original word list from the initial Wordle game.  It contains the
+classic Wordle word list.
 
 =item C<NYT>
 
 The New York Times Wordle word list, which includes words used by NYT
-Wordle.  It may contain different words than the original.
+Wordle.  It may contain different words than the original.  This is
+the default dataset.
 
 When option B<--compat> is given and the answer for the index is not
 included in the dataset, it is fetched from the New York Times web
@@ -78,7 +79,7 @@ at the index modulo the number of answers is used.  A warning message
 is shown for series zero, because the answer differs from the
 original game.
 
-Answer for option B<-s0n0> with C<ORIGINAL> dataset is C<cigar>.
+Answer for option B<-s0n0> is C<cigar>.
 
 =item B<-->[B<no->]B<result>
 
@@ -167,8 +168,8 @@ C<rents>, and are made of unique characters.
 
 =head2 Using different datasets
 
-    greple -Mwordle --data=NYT            # Use NYT Wordle word list
-    greple -Mwordle --data=ORIGINAL       # Use original word list (default)
+    greple -Mwordle --data=NYT            # Use NYT Wordle word list (default)
+    greple -Mwordle --data=ORIGINAL       # Use original word list
     greple -Mwordle --data=NYT -s0n0      # First word in NYT dataset (cigar)
 
 =begin html

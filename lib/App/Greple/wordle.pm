@@ -13,7 +13,7 @@ use App::Greple::wordle::game;
 
 use Getopt::EX::Hashed; {
     Getopt::EX::Hashed->configure( DEFAULT => [ is => 'rw' ] );
-    has data    => '   =s ' , default => 'ORIGINAL' ;
+    has data    => '   =s ' , default => 'NYT' ;
     has answer  => '   =s ' , default => $ENV{WORDLE_ANSWER} ;
     has index   => ' n =i ' , default => $ENV{WORDLE_INDEX} ;
     has trial   => ' x =i ' , default => 6 ;
