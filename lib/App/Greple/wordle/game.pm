@@ -94,6 +94,22 @@ sub _result {
     } @_;
 }
 
+my %guess_color = (
+    G => '555/#6aaa64',
+    Y => '555/#c9b458',
+    K => '555/#787c7e',
+    );
+
+sub guess_color {
+    my $obj = shift;
+    my @result = _result(map lc, $obj->answer, @_);
+    map {
+	my @c = shift(@result) =~ /./g;
+	my @w = /./g;
+	join '', pairwise { colorize($guess_color{$a}, $b) } @c, @w;
+    } @_;
+}
+
 ######################################################################
 # hint
 ######################################################################

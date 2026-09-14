@@ -84,6 +84,11 @@ Answer for option B<-s0n0> with C<ORIGINAL> dataset is C<cigar>.
 
 Show result when successful.  Default is true.
 
+=item B<-->[B<no->]B<history>
+
+Show previous attempts above the latest one, so that all attempts are
+listed together.  Default is true.
+
 =item B<--random>
 
 Generate a random index every time.

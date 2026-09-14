@@ -23,6 +23,7 @@ use Getopt::EX::Hashed; {
     has compat  => '      ' , action  => sub { $_->series = 0 } ;
     has keymap  => '   !  ' , default => 1 ;
     has result  => '   !  ' , default => 1 ;
+    has history => '   !  ' , default => 1 ;
     has correct => '   =s ' , default => "\N{U+1F389}" ; # PARTY POPPER
     has wrong   => '   =s ' , default => "\N{U+1F4A5}" ; # COLLISION SYMBOL
     has debug   => '   !  ' ;
@@ -159,6 +160,8 @@ sub check {
 	command($word) or respond $app->wrong;
 	$_ = '';
     } else {
+	# show previous attempts above the line greple prints
+	say for $app->history ? $game->guess_color(@{$game->attempts}) : ();
 	$game->try($word);
     }
 }

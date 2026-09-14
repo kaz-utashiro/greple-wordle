@@ -74,6 +74,11 @@ Use the **--compat** option to get answers compatible with the original game.
 
     Show result when successful.  Default is true.
 
+- **--**\[**no-**\]**history**
+
+    Show previous attempts above the latest one, so that all attempts are
+    listed together.  Default is true.
+
 - **--random**
 
     Generate a random index every time.
