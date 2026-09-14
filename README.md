@@ -7,6 +7,10 @@ App::Greple::wordle - wordle module for greple
 
 greple -Mwordle
 
+# VERSION
+
+Version 0.13
+
 # DESCRIPTION
 
 App::Greple::wordle is a greple module that implements the Wordle game.
