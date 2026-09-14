@@ -9,6 +9,31 @@ my  $data   = get_data_section;
 our @WORDS  = $data->{WORDS} =~ /\w+/g;
 our @HIDDEN = $data->{HIDDEN} =~ /\w+/g;
 
+#
+# Get the answer of the day from New York Times.  Return undef for
+# future puzzles or on any failure.
+#
+use HTTP::Tiny;
+use JSON::PP;
+use Date::Calc qw(Add_Delta_Days Delta_Days Today);
+
+our $URL = 'https://www.nytimes.com/svc/wordle/v2/%04d-%02d-%02d.json';
+our $TIMEOUT = 5;
+
+sub fetch_answer {
+    my $index = shift;
+    return undef if $index < 0 or $index > Delta_Days(2021, 6, 19, Today());
+    my $url = sprintf $URL, Add_Delta_Days(2021, 6, 19, $index);
+    my $res = HTTP::Tiny->new(timeout => $TIMEOUT)->get($url);
+    $res->{success} or return undef;
+    my $json = eval { decode_json($res->{content}) } or return undef;
+    my $answer = $json->{solution} // '';
+    $answer =~ /^[a-z]{5}$/i or return undef;
+    my $days = $json->{days_since_launch};
+    return undef if defined $days and $days != $index;
+    lc $answer;
+}
+
 1;
 
 ## data from New York Times until November 09, 2025

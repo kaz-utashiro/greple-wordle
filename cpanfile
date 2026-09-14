@@ -10,6 +10,9 @@ requires 'Try::Tiny';
 requires 'Text::VisualWidth::PP', '0.05';
 requires 'Data::Section::Simple';
 requires 'Mo';
+requires 'HTTP::Tiny';
+requires 'JSON::PP';
+recommends 'IO::Socket::SSL';
 
 on 'test' => sub {
     requires 'Test::More', '0.98';

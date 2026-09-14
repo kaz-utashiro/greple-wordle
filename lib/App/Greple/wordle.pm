@@ -74,6 +74,14 @@ sub setup {
 	    srand($app->series);
 	    @word_hidden = shuffle @word_hidden;
 	}
+	# ask the dataset for an answer which is not in the local data
+	my $fetch = $app->series == 0 && $pkg->can('fetch_answer');
+	if ($app->index > $#word_hidden and $fetch
+	    and my $answer = $fetch->($app->index)) {
+	    push @word_all, $answer unless $word_all{$answer}++;
+	    $app->answer = $answer;
+	    return;
+	}
 	if ($app->index > $#word_hidden) {
 	    warn sprintf "no data for %d, so pick a random answer from past data\n", $app->index;
 	    srand($app->series);
