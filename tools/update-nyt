@@ -1,0 +1,90 @@
+#!/usr/bin/env perl
+#
+# Append New York Times Wordle answers up to yesterday to the HIDDEN
+# section of the NYT dataset.
+#
+#   tools/update-nyt [ lib/App/Greple/wordle/NYT.pm ]
+#
+# Answers are fetched one by one by App::Greple::wordle::NYT::fetch_answer.
+# They are not printed.  If a fetch fails, answers fetched so far are
+# written and the command exits with status 1, so it can be run again.
+#
+
+use v5.14;
+use warnings;
+use FindBin;
+use lib "$FindBin::Bin/../lib";
+use Date::Calc qw(Add_Delta_Days Delta_Days Month_to_Text Today);
+use App::Greple::wordle::NYT;
+
+my $file     = shift // "$FindBin::Bin/../lib/App/Greple/wordle/NYT.pm";
+my $per_line = 13;
+my $interval = 0.5;
+my $retry    = 3;
+
+my $text = do {
+    open my $fh, '<', $file or die "$file: $!\n";
+    local $/;
+    <$fh>;
+};
+
+my %section;
+while ($text =~ /^\@\@ (\w+)\n(.*?)(?=^\@\@ |\z)/msg) {
+    my($name, $body) = ($1, $2);
+    $section{$name} = [ $body =~ /\w+/g ];
+}
+my @hidden = @{ $section{HIDDEN} or die "$file: no HIDDEN section\n" };
+my %words  = map { $_ => 1 } @{ $section{WORDS} or die "$file: no WORDS section\n" };
+
+my $yesterday = Delta_Days(2021, 6, 19, Today()) - 1;
+my($failed, @new);
+for my $index (@hidden .. $yesterday) {
+    select undef, undef, undef, $interval if @new;
+    # requests fail occasionally, so retry a few times
+    my $answer;
+    for my $try (1 .. $retry) {
+	$answer = App::Greple::wordle::NYT::fetch_answer($index) and last;
+	sleep $try if $try < $retry;
+    }
+    if (not defined $answer) {
+	warn "failed to fetch answer #$index\n";
+	$failed = 1;
+	last;
+    }
+    warn "answer #$index is not in WORDS\n" unless $words{$answer};
+    push @new, $answer;
+}
+
+if (@new) {
+    my $last = $#hidden + @new;
+
+    # append to the HIDDEN section, filling its last line first
+    $text =~ /^\@\@ HIDDEN\n/mg or die;
+    my $start = pos $text;
+    $text =~ /\n*(?=^\@\@ |\z)/mg or die;
+    my $end = $-[0];
+    my @lines = split /\n/, substr($text, $start, $end - $start);
+    my @words = split ' ', pop(@lines) // '';
+    for my $word (@new) {
+	if (@words >= $per_line) {
+	    push @lines, join '', map "$_ ", @words;
+	    @words = ();
+	}
+	push @words, $word;
+    }
+    substr($text, $start, $end - $start) = join "\n", @lines, join '', map "$_ ", @words;
+
+    my($y, $m, $d) = Add_Delta_Days(2021, 6, 19, $last);
+    my $until = sprintf '%s %02d, %d', Month_to_Text($m), $d, $y;
+    $text =~ s/^(## data from New York Times until ).*$/$1$until/m
+	or warn "$file: data date comment not found\n";
+
+    open my $fh, '>', $file or die "$file: $!\n";
+    print $fh $text;
+    close $fh or die "$file: $!\n";
+    printf "added %d answers (#%d..#%d, until %s)\n", scalar @new, scalar @hidden, $last, $until;
+} else {
+    say "no new answers";
+}
+
+exit($failed ? 1 : 0);
